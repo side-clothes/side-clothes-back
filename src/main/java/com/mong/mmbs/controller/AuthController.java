@@ -1,6 +1,6 @@
 package com.mong.mmbs.controller;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,17 +19,14 @@ import com.mong.mmbs.dto.response.auth.SignInPostResponseDto;
 import com.mong.mmbs.dto.response.auth.SignUpPostResponseDto;
 import com.mong.mmbs.dto.response.auth.FindIdPostResponseDto;
 import com.mong.mmbs.dto.response.auth.ResetPasswordPostResponseDto;
-import com.mong.mmbs.service.AuthService;
-import com.mong.mmbs.service.MailService;
-import com.mong.mmbs.service.UserService;
+import com.mong.mmbs.service.implement.AuthServiceImpl;
 
 @RestController
 @RequestMapping(ApiMappingPattern.AUTH)
 public class AuthController {
 
-	@Autowired AuthService authService;
-	@Autowired UserService userUpdateService;
-	@Autowired MailService mailService;
+	@Autowired
+	AuthServiceImpl authService;
 
 	private static final String POST_SIGN_UP = "/signUp";
 	private static final String POST_SIGN_IN = "/signIn";

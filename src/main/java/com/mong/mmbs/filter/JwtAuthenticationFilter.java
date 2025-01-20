@@ -23,21 +23,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-
 			throws ServletException, IOException {
-		
 		try {
-			String token = parseBearerToken(request);
-			
-			if (token != null && !token.equalsIgnoreCase("null")) {
-				String userId = tokenProvider.validate(token);
-				AbstractAuthenticationToken authentication =
-						new UsernamePasswordAuthenticationToken(userId, null, AuthorityUtils.NO_AUTHORITIES);
-				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-				securityContext.setAuthentication(authentication);
-				SecurityContextHolder.setContext(securityContext);
+			String authorizationHeader = request.getHeader("Authorization");
+
+			String token = (authorizationHeader != null && authorizationHeader.startsWith("Bearer "))
+					? tokenProvider.removeBearer(authorizationHeader)
+					: null;
+
+			if (token == null || !tokenProvider.isValidToken(token)) {
+				filterChain.doFilter(request, response);
+				return;
 			}
+
+			Long id = tokenProvider.getIdFromJwt(token);
+			setAuthenticationContext(request, id);
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}	
@@ -45,10 +45,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);
 	}
 
-	private String parseBearerToken(HttpServletRequest request) {
-		String bearerToken = request.getHeader("Authorization");
-		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer "))
-			return bearerToken.substring(7);
-		return null;
+	private void setAuthenticationContext(HttpServletRequest request, Long id) {
+		AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, AuthorityUtils.NO_AUTHORITIES);
+
+		authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+		SecurityContext securityContext = SecurityContextHolder.getContext();
+		securityContext.setAuthentication(authenticationToken);
+
+		SecurityContextHolder.setContext(securityContext);
 	}
 }

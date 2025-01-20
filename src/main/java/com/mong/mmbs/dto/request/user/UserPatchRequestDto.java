@@ -1,14 +1,13 @@
 package com.mong.mmbs.dto.request.user;
 
-import javax.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 public class UserPatchRequestDto {
-  @NotBlank
+  	@NotBlank
 	private String userAddress;
 	@NotBlank
 	private String userAddressDetail;

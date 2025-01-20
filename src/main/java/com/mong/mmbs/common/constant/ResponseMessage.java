@@ -16,6 +16,12 @@ public class ResponseMessage {
     public static final String NOT_EXIST_ORDER = "Does not Exist Order";
     public static final String NOT_EXIST_USER = "Does Not Exist User";
 
+    public static final String INVALID_USER_ID = "Invalid user id.";
+    public static final String INVALID_PASSWORD = "Invalid password.";
+    public static final String WEAK_PASSWORD = "Weak password.";
+    public static final String INVALID_EMAIL = "Invalid email.";
+
+
     public static final String NOT_MATCH_PASSWORD = "Password Does not match";
     public static final String NOT_MATCH_GUESTPASSWORD= "GuestPassword Does not match";
 

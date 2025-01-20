@@ -1,26 +1,86 @@
 package com.mong.mmbs.security;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.security.Key;
 import java.util.Date;
-import org.springframework.stereotype.Service;
+
+
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-@Service
-public class TokenProvider {
-	private static final String SECURITY_KEY = "jwtseckey!@";
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-	public String create (String userId) {
-		Date exprTime = Date.from(Instant.now().plus(365, ChronoUnit.DAYS));
-		return Jwts.builder()
-				.signWith(SignatureAlgorithm.HS512, SECURITY_KEY)
-				.setSubject(userId).setIssuedAt(new Date()).setExpiration(exprTime)
-				.compact();
-	}
-	public String validate (String token) {
-		Claims claims = Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(token).getBody();
-		System.out.println(token);
-		return claims.getSubject();
-	}
+import javax.annotation.PostConstruct;
+
+@Component
+public class TokenProvider {
+    private final Key key;
+
+    @Value("${jwt.expiration}")
+    private int jwtExpirationMs;
+
+    @Value("${mail.auth-code-expiration-millis}")
+    private int jwtEmailExpirationMs;
+
+    public int getExpiration() {
+        return jwtExpirationMs;
+    }
+
+    public int getEmailExpiration() {
+        return jwtEmailExpirationMs;
+    }
+
+    public TokenProvider(@Value("${jwt.secret}") String secret, @Value("${jwt.expiration}") int jwtExpirationMs) {
+        this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
+        this.jwtExpirationMs = jwtExpirationMs;
+    }
+
+    public String generateToken(String id) {
+        return Jwts.builder()
+                .claim("id", id)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public String removeBearer(String bearerToken) {
+        if(bearerToken == null || !bearerToken.startsWith("Bearer ")) {
+            throw new RuntimeException("Invalid bearer token");
+        }
+        return bearerToken.substring("Bearer ".length());
+    }
+
+    public Long getIdFromJwt(String token) {
+        Claims claims = getClaims(token);
+        return claims.get("id", Long.class);
+    }
+
+    public boolean isValidToken(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return !claims.getExpiration().before(new Date());
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public Claims getClaims(String token) {
+        JwtParser jwtParser = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build();
+        return jwtParser.parseClaimsJws(token).getBody();
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("JWT Provider 초기화 완료");
+    }
 }

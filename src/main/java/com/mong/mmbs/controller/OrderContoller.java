@@ -2,8 +2,7 @@ package com.mong.mmbs.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +21,14 @@ import com.mong.mmbs.dto.response.order.GiftGetResponseDto;
 import com.mong.mmbs.dto.response.order.GiftPatchResponseDto;
 import com.mong.mmbs.dto.response.order.OrderGetListResponseDto;
 import com.mong.mmbs.dto.response.order.OrderPostResponseDto;
-import com.mong.mmbs.service.OrderService;
+import com.mong.mmbs.service.implement.OrderServiceImpl;
 
 @RestController
 @RequestMapping(ApiMappingPattern.ORDER)
 public class OrderContoller {
 
-  @Autowired OrderService orderService;
+  @Autowired
+  OrderServiceImpl orderService;
 
   public static final String ORDER_POST = "/"; 
 
