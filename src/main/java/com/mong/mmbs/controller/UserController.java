@@ -1,7 +1,6 @@
 package com.mong.mmbs.controller;
 
-import javax.validation.Valid;
-
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,13 +17,14 @@ import com.mong.mmbs.dto.response.user.UserGetResponseDto;
 import com.mong.mmbs.dto.response.user.UserPatchResponseDto;
 import com.mong.mmbs.common.constant.ApiMappingPattern;
 import com.mong.mmbs.dto.request.user.UserPatchRequestDto;
-import com.mong.mmbs.service.UserService;
+import com.mong.mmbs.service.implement.UserServiceImpl;
 
 @RestController
 @RequestMapping(ApiMappingPattern.USER)
 public class UserController {
 	
-	@Autowired UserService userService;
+	@Autowired
+	UserServiceImpl userService;
 
 	private static final String GET_USER = "/";
 	private static final String PATCH_USER_UPDATE = "/";

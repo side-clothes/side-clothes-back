@@ -1,7 +1,6 @@
 package com.mong.mmbs.controller;
 
-import javax.validation.Valid;
-
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,13 +18,14 @@ import com.mong.mmbs.dto.response.product.ProductLikePostResponseDto;
 import com.mong.mmbs.dto.response.product.ProductSearchGetResponseDto;
 import com.mong.mmbs.dto.response.product.RandomProductImageGetResponseDto;
 import com.mong.mmbs.repository.ProductRepository;
-import com.mong.mmbs.service.ProductService;
+import com.mong.mmbs.service.implement.ProductServiceImpl;
 
 @RestController
 @RequestMapping(ApiMappingPattern.PRODUCT)
 public class ProductController {
     
-    @Autowired ProductService productService;
+    @Autowired
+    ProductServiceImpl productService;
     @Autowired ProductRepository productRepository;
 
     private static final String POST_PRODUCT_LIKE = "/productLike";

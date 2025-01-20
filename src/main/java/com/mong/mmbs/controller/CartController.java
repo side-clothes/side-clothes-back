@@ -1,7 +1,8 @@
 package com.mong.mmbs.controller;
 
-import javax.validation.Valid;
 
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +22,7 @@ import com.mong.mmbs.dto.response.cart.CartDeleteResponseDto;
 import com.mong.mmbs.dto.response.cart.CartGetResponseDto;
 import com.mong.mmbs.dto.response.cart.CartAmountPatchResponseDto;
 import com.mong.mmbs.dto.response.cart.CartPostResponseDto;
-import com.mong.mmbs.service.CartService;
+import com.mong.mmbs.service.implement.CartServiceImpl;
 import com.mong.mmbs.common.constant.ApiMappingPattern;
 
 @RestController
@@ -29,7 +30,7 @@ import com.mong.mmbs.common.constant.ApiMappingPattern;
 public class CartController {
 
 	@Autowired
-	CartService cartService;
+	CartServiceImpl cartService;
 
 	public static final String CART_POST = "/";
     

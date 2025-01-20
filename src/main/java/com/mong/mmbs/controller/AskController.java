@@ -1,7 +1,7 @@
 package com.mong.mmbs.controller;
 
-import javax.validation.Valid;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,14 +22,15 @@ import com.mong.mmbs.dto.response.ask.AskGetAskIdResponseDto;
 import com.mong.mmbs.dto.response.ask.AskGetFindResponseDto;
 import com.mong.mmbs.dto.response.ask.AskPatchResponseDto;
 import com.mong.mmbs.dto.response.ask.AskPostResponseDto;
-import com.mong.mmbs.service.AskService;
+import com.mong.mmbs.service.implement.AskServiceImpl;
 import com.mong.mmbs.common.constant.ApiMappingPattern;
 
 @RestController
 @RequestMapping(ApiMappingPattern.ASK)
 public class AskController {
 
-  @Autowired AskService askService;
+  @Autowired
+  AskServiceImpl askService;
 
   public static final String ASK_POST = "/";
 
