@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "review")
-@Entity(name = "review")
+@Table(name = "reviews")
+@Entity(name = "reviews")
 public class ReviewEntity {
 //	리뷰 시퀀스
 	@Id

@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor	
-@Table(name = "recommend")
-@Entity(name = "recommend")
+@Table(name = "recommends")
+@Entity(name = "recommends")
 public class RecommendEntity {
 //  추천인 테이블 시퀀스
 	@Id

@@ -22,8 +22,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ask")
-@Entity(name = "ask")
+@Table(name = "asks")
+@Entity(name = "asks")
 public class AskEntity {
 //  문의 번호
 	@Id

@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "gift")
-@Entity(name = "gift")
+@Table(name = "gifts")
+@Entity(name = "gifts")
 public class GiftEntity {
 //	사은품 코드
 	@Id

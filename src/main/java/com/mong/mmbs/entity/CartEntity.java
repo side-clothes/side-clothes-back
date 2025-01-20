@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "cart")
-@Entity(name = "cart")
+@Table(name = "carts")
+@Entity(name = "carts")
 public class CartEntity {
 //  카트 시퀀스
 	@Id

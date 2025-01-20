@@ -15,6 +15,6 @@ public class UserPatchRequestDto {
 	private String userName;
 	@NotBlank
 	private String userPhone;
-	private String userKidBirth;
+	private String userBirth;
 
 }

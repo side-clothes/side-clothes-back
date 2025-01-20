@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="orderDetail")
-@Entity(name="orderDetail")
+@Table(name="orderDetails")
+@Entity(name="orderDetails")
 public class OrderDetailEntity {
 //	주문상세 시퀀스
 	@Id
@@ -40,7 +40,7 @@ public class OrderDetailEntity {
 		this.productCount = dto.getOrderCount();
 		this.orderNumber = order.getOrderNumber();
 		this.productPrice = product.getProductPrice();
-		this.productTitle = product.getProductTitle();
+		this.productTitle = product.getProductName();
 		this.productImageUrl = product.getProductImageUrl();
 	}
 }

@@ -6,8 +6,8 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Table(name = "order_check")
-@Entity(name = "order_check")
+@Table(name = "order_checks")
+@Entity(name = "order_checks")
 @Data
 public class OrderCheckEntity {
 
