@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="product")
-@Entity(name="product")
+@Table(name="products")
+@Entity(name="products")
 public class ProductEntity {
 //	고유번호
 	@Id
@@ -24,17 +24,11 @@ public class ProductEntity {
 //	세부 장르
 	private String productSubGenre;
 //	고유번호
-	private int productIsbn;
-//	제목s
-	private String productTitle;
-//	저자
-	private String productWriter;
-//	출판사
-	private String productPublisher;
-//	연령 [0~3세, 4~7세, 부모]
-	private String productAge;
-//	연령 세부 장르
-	private String productSubAge;
+	private String productNumber;
+//	상품명
+	private String productName;
+//	브랜드
+	private String productBrand;
 //	출판일
 	private String productPublicationDate;
 //	가격

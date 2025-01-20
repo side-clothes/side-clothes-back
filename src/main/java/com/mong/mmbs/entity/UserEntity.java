@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="user")
-@Entity(name="user")
+@Table(name="users")
+@Entity(name="users")
 public class UserEntity {
 //	아이디
 	@Id
@@ -35,8 +35,8 @@ public class UserEntity {
 	private String userName;
 //	전화번호
 	private String userPhone;
-//	아이 생일
-	private String userKidBirth;
+//	생일
+	private String userBirth;
 //	가입 날짜
 	private String userSignUpDate;
 //	탈퇴 날짜
@@ -52,7 +52,7 @@ public class UserEntity {
 		this.userAddressDetail =dto.getUserAddressDetail();
 		this.userName = dto.getUserName();
 		this.userPhone = dto.getUserPhone();
-		this.userKidBirth = dto.getUserKidBirth();
+		this.userBirth = dto.getUserBirth();
 		this.userSignUpDate = dateFormat.format(new Date());
 	}
 	
@@ -62,7 +62,7 @@ public class UserEntity {
 		this.userAddressDetail =dto.getUserAddressDetail();
 		this.userName = dto.getUserName();
 		this.userPhone = dto.getUserPhone();
-		this.userKidBirth = dto.getUserKidBirth();
+		this.userBirth = dto.getUserBirth();
 		
 	}
 

@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="like")
-@Entity(name="like")
+@Table(name="likes")
+@Entity(name="likes")
 public class LikeEntity {
 //	좋아요 시퀀스
 	@Id
