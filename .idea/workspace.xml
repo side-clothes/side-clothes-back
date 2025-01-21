@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="35664fd0-6d2d-4eb5-a1d3-08a22676ff9b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/controller/ProductCategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/controller/ProductCategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/auth/ResetPasswordPostResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/auth/ResetPasswordPostResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/cart/CartPostResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/cart/CartPostResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/product/ProductDetailGetProductSeqResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/product/ProductDetailGetProductSeqResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/product/ProductLikePostResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/product/ProductLikePostResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/productCategory/ProductGetResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/productCategory/ProductGetResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/user/UserGetResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/user/UserGetResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/user/UserPatchResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/dto/response/user/UserPatchResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/AskEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/AskEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/CartEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/CartEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/GiftEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/GiftEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/LikeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/LikeEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/OrderCheckEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/OrderCheckEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/OrderDetailEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/OrderDetailEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/OrderEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/OrderEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/ProductEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/RecommendEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/RecommendEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/ReviewEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/ReviewEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/entity/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/filter/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/filter/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/repository/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/security/TokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/provider/JwtProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/service/ProductCategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/service/ProductCategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/service/implement/AuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/service/implement/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/service/implement/ProductCategoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/service/implement/ProductCategoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/service/implement/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mong/mmbs/service/implement/ProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="mmbs" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2remuJPt2Hu1kOmI30YUgOLEZ8t" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build side-clothes-back.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.MmbsApplication.executor": "Run",
+    "git-widget-placeholder": "hdh-product__category-0121",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/ehdgu/OneDrive/바탕 화면/사이드프로젝트/어린이서점프로젝트/side-clothes-back",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="MmbsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="mmbs.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.mong.mmbs.MmbsApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="35664fd0-6d2d-4eb5-a1d3-08a22676ff9b" name="Changes" comment="" />
+      <created>1736928135414</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1736928135414</updated>
+      <workItem from="1736928136523" duration="807000" />
+      <workItem from="1736986023607" duration="2821000" />
+      <workItem from="1737004709455" duration="1986000" />
+      <workItem from="1737335769448" duration="9903000" />
+      <workItem from="1737351903189" duration="3719000" />
+      <workItem from="1737356863948" duration="4954000" />
+      <workItem from="1737369370927" duration="73000" />
+      <workItem from="1737369453979" duration="400000" />
+      <workItem from="1737425018714" duration="24000" />
+      <workItem from="1737435432048" duration="1942000" />
+      <workItem from="1737438291311" duration="3954000" />
+      <workItem from="1737443090528" duration="457000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
