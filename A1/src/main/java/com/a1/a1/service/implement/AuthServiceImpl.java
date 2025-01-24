@@ -60,19 +60,27 @@ public class AuthServiceImpl implements AuthService {
 
         RecommendEntity recommendEntity = new RecommendEntity();
 
-        if (recommendedUserId == null || recommendedUserId.isEmpty()) {
-            if (!userRepository.existsById(recommendedUserId))
-                return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
-            try {
+        if(recommendedUserId != null){
+            if(userRepository.existsById(recommendedUserId)){
 
-                recommendRepository.save(recommendEntity);
+                try {
+                    recommendEntity.setRecommendedUserId(recommendedUserId);
+                    recommendEntity.setRecommendingUserId(userId);
+                    recommendRepository.save(recommendEntity);
 
-            } catch (Exception exception) {
-                exception.printStackTrace();
-                return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                    return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
+                }
+            } else {
+                return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_DATA);
+
             }
-
+        } else {
+            recommendedUserId = "";
         }
+
+
 
         String encodedPassword = passwordEncoder.encode(userPassword);
         dto.setUserPassword(encodedPassword);
