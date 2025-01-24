@@ -1,8 +1,6 @@
 package com.a1.a1.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class RecommendEntity {
     //  추천인 테이블 시퀀스
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int recommendSeq;
     //  추천인 (추천 당한 사람)
     private String recommendedUserId;
