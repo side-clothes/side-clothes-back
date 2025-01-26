@@ -22,6 +22,7 @@ public class AskEntity {
     //  문의 번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ask_id")
     private int askId;
     //  작성자 아이디 (참조)
     @NotBlank
@@ -53,6 +54,7 @@ public class AskEntity {
     }
 
     public void patch(AskPatchRequestDto dto) {
+        this.askId = dto.getAskId();
         this.askSort = dto.getAskSort();
         this.askTitle = dto.getAskTitle();
         this.askContent = dto.getAskContent();
