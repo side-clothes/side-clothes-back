@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +16,7 @@ public class AskPatchResponseDto {
     private int askSort;
     private String askTitle;
     private String askContent;
-    private String askDatetime;
+    private LocalDateTime askDatetime;
     private int askStatus;
     private String askReply;
 
@@ -23,7 +25,7 @@ public class AskPatchResponseDto {
         this.askWriter = askEntity.getAskWriter();
         this.askSort = askEntity.getAskSort();
         this.askTitle = askEntity.getAskTitle();
-        this.askContent = askEntity.getAskDatetime();
+        this.askContent = askEntity.getAskContent();
         this.askDatetime = askEntity.getAskDatetime();
         this.askStatus = askEntity.getAskStatus();
         this.askReply = askEntity.getAskReply();

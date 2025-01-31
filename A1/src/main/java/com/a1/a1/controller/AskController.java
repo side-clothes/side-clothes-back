@@ -44,10 +44,10 @@ public class AskController {
 
     // 문의 전체 조회 - 0
     @GetMapping(ASK_GET_LIST)
-    public ResponseEntity<ResponseDto<List<AskGetListResponseDto>>> getAskList(@AuthenticationPrincipal String userId
+    public ResponseEntity<ResponseDto<List<AskGetListResponseDto>>> getAskAllByAskWriter(@AuthenticationPrincipal String userId
     ){
-        ResponseDto<List<AskGetListResponseDto>> response = askService.getAskList(userId);
-        HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        ResponseDto<List<AskGetListResponseDto>> response = askService.getAskAllByAskWriter(userId);
+        HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return ResponseEntity.status(status).body(response);
     }
 

@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -36,7 +37,7 @@ public class AskEntity {
     @NotBlank
     private String askContent;
     //  문의 날짜
-    private String askDatetime;
+    private LocalDateTime askDatetime;
     //  문의 상태 [-1: 삭제, 0: 문의 접수, 1: 답변완료 상태]
     private int askStatus;
     //  문의 답변
@@ -49,7 +50,6 @@ public class AskEntity {
         this.askSort = dto.getAskSort();
         this.askTitle = dto.getAskTitle();
         this.askContent = dto.getAskContent();
-        this.askDatetime = dateFormat.format(new Date());
         this.askStatus = 0;
     }
 

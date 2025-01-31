@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -16,7 +17,7 @@ public class AskGetFindResponseDto {
     private int askSort;
     private String askTitle;
     private String askContent;
-    private String askDatetime;
+    private LocalDateTime askDatetime;
     private int askStatus;
     private String askReply;
 
@@ -25,7 +26,7 @@ public class AskGetFindResponseDto {
         this.askWriter = askEntity.getAskWriter();
         this.askSort = askEntity.getAskSort();
         this.askTitle = askEntity.getAskTitle();
-        this.askContent = askEntity.getAskDatetime();
+        this.askContent = askEntity.getAskContent();
         this.askDatetime = askEntity.getAskDatetime();
         this.askStatus = askEntity.getAskStatus();
         this.askReply = askEntity.getAskReply();

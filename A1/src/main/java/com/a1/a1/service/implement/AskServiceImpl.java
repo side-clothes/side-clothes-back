@@ -10,9 +10,11 @@ import com.a1.a1.repository.AskRepository;
 import com.a1.a1.service.AskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
@@ -33,12 +35,14 @@ public class AskServiceImpl implements AskService {
         int askSort = dto.getAskSort();
         String askTitle = dto.getAskTitle();
         String askContent = dto.getAskContent();
+        LocalDateTime now = LocalDateTime.now();
         try {
             AskEntity askEntity = AskEntity.builder()
                     .askTitle(askTitle)
                     .askContent(askContent)
                     .askSort(askSort)
                     .askWriter(askWriter)
+                    .askDatetime(now)
                     .build();
             askRepository.save(askEntity);
             data = new AskPostResponseDto(askEntity);
@@ -50,14 +54,16 @@ public class AskServiceImpl implements AskService {
 
     }
 
+    // 뮨의 전채 조회
     @Override
-    public ResponseDto<List<AskGetListResponseDto>> getAskList(String userId) {
+    public ResponseDto<List<AskGetListResponseDto>> getAskAllByAskWriter(String userId) {
         List<AskGetListResponseDto> data = null;
         try {
-            List<AskEntity> askEntities = askRepository.findByAskWriter(userId);
-            if(askEntities.isEmpty()){
+            Optional<List<AskEntity>> optionalAskEntities = askRepository.getAskAllByAskWriter(userId);
+            if(optionalAskEntities.isEmpty()){
                 return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
             }
+            List<AskEntity> askEntities = optionalAskEntities.get();
             data = askEntities.stream().map(AskGetListResponseDto::new)
                     .collect(Collectors.toList());
         } catch (Exception e){
@@ -66,10 +72,9 @@ public class AskServiceImpl implements AskService {
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS,data);
     }
-//
-//
-//
-//
+
+
+
     public ResponseDto<AskGetFindResponseDto> findByAskWriterAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(String userId, int askStatus, int months, int askSort) {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -80,7 +85,7 @@ public class AskServiceImpl implements AskService {
 
         try {
 
-            Optional<AskEntity> optionalAskEntity = askRepository.findByAskWriterAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(userId, String.valueOf(askStatus),months,askSort);
+            Optional<AskEntity> optionalAskEntity = askRepository.findByAskWriterAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(userId, LocalDateTime.parse(String.valueOf(askStatus)),months,askSort);
             if (optionalAskEntity.isEmpty()) {
                 return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
             }
@@ -132,6 +137,7 @@ public class AskServiceImpl implements AskService {
 //
     // 문의 삭제
     @Override
+    @Transactional
     public ResponseDto<Boolean> deleteByAskId(int askId) {
         try {
             askRepository.deleteByAskId( askId);

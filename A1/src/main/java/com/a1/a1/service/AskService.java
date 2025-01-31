@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AskService {
     ResponseDto<AskPostResponseDto> postAsk(AskPostRequestDto dto, String userId);
-    ResponseDto<List<AskGetListResponseDto>> getAskList(String userId);
+    ResponseDto<List<AskGetListResponseDto>> getAskAllByAskWriter(String userId);
     ResponseDto<AskGetAskIdResponseDto> getAskId(int askId);
 //    ResponseDto<AskPatchResponseDto> patchAsk(AskPatchRequestDto dto);
     ResponseDto<Boolean> deleteByAskId(int askId);

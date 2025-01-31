@@ -12,6 +12,7 @@ import com.a1.a1.repository.ProductRepository;
 import com.a1.a1.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,56 +22,33 @@ public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
-
-    public ResponseDto<CartPostResponseDto> post(String userId, CartPostRequestDto dto) {
-
+    // 카트 등록
+    public ResponseDto<CartPostResponseDto> postCart(String userId, CartPostRequestDto dto) {
         CartPostResponseDto data = null;
-
-        String cartUserId = userId;
         int cartProductId = dto.getCartProductId();
         int cartProductAmount = dto.getCartProductAmount();
-
+        String cartProductName = dto.getCartProductName();
+        String cartProductImage = dto.getCartProductImg();
+        int cartProductPrice = dto.getCartProductPrice();
         try {
-
-            ProductEntity productEntity = productRepository.findByProductSeq(cartProductId);
-            if (productEntity == null) return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_PRODUCT);
-
-            CartEntity cartEntity = cartRepository.findByCartUserIdAndCartProductId(cartUserId, cartProductId);
-
-            if (cartEntity == null) {
-
-                try {
-                    cartEntity = new CartEntity(userId, dto, productEntity);
-                    cartRepository.save(cartEntity);
-
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
-                }
-
-            } else {
-
-                try {
-
-                    cartEntity.setCartProductAmount(cartProductAmount);
-                    cartRepository.save(cartEntity);
-
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
-                }
-
-            }
-
-            data = new CartPostResponseDto(cartEntity, productEntity);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
+            CartEntity cartEntity = CartEntity.builder()
+                    .cartProductId(cartProductId)
+                    .cartProductPrice(cartProductAmount)
+                    .cartUserId(userId)
+                    .cartProductAmount(cartProductAmount)
+                    .cartProductName(cartProductName)
+                    .cartProductImage(cartProductImage)
+                    .cartProductPrice(cartProductPrice)
+                    .build();
+            cartRepository.save(cartEntity);
+            ProductEntity ProductEntity = new ProductEntity();
+            productRepository.save(ProductEntity);
+            data = new CartPostResponseDto(cartEntity);
+        } catch (Exception e){
+            e.printStackTrace();
             return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
         }
-
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS,data);
     }
 
     public ResponseDto<CartGetResponseDto> get(String userId) {
@@ -112,27 +90,17 @@ public class CartServiceImpl implements CartService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-    public ResponseDto<CartDeleteResponseDto> delete(String userId, int cartId) {
-
-        CartDeleteResponseDto data = null;
-
+    // 카트 삭제 아이디로
+    @Override
+    @Transactional
+    public ResponseDto<Boolean> deleteByCartId(int cartId) {
         try {
-
-            CartEntity cartEntity = cartRepository.findByCartId(cartId);
-            if (cartEntity == null) return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_CART);
-
-            cartRepository.delete(cartEntity);
-
-            List<CartEntity> cartList = cartRepository.findByCartUserId(userId);
-            data = new CartDeleteResponseDto(cartList);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
+            cartRepository.deleteByCartId(cartId);
+        } catch (Exception e){
+            e.printStackTrace();
             return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
         }
-
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, true);
     }
 
     public ResponseDto<CartDeleteAllResponseDto> deleteAll(String cartUserId) {
