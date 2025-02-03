@@ -1,9 +1,12 @@
 package com.a1.a1.dto.response.ask;
 
 import com.a1.a1.entity.AskEntity;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -13,8 +16,10 @@ public class AskPostResponseDto {
     private String askWriter;
     private int askSort;
     private String askTitle;
+    @NotBlank
     private String askContent;
-    private String askDatetime;
+    @NotBlank
+    private LocalDateTime askDatetime;
     private int askStatus;
     private String askReply;
 
@@ -23,7 +28,7 @@ public class AskPostResponseDto {
         this.askWriter = askEntity.getAskWriter();
         this.askSort = askEntity.getAskSort();
         this.askTitle = askEntity.getAskTitle();
-        this.askContent = askEntity.getAskDatetime();
+        this.askContent = askEntity.getAskContent();
         this.askDatetime = askEntity.getAskDatetime();
         this.askStatus = askEntity.getAskStatus();
         this.askReply = askEntity.getAskReply();

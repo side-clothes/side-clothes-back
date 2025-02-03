@@ -8,9 +8,12 @@ import com.a1.a1.dto.response.order.GiftGetResponseDto;
 import com.a1.a1.dto.response.order.GiftPatchResponseDto;
 import com.a1.a1.dto.response.order.OrderGetListResponseDto;
 import com.a1.a1.dto.response.order.OrderPostResponseDto;
+import com.a1.a1.service.OrderService;
 import com.a1.a1.service.implement.OrderServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +25,7 @@ import java.util.List;
 public class OrderController {
 
 
-    private final OrderServiceImpl orderService;
+    private final OrderService orderService;
 
     public static final String ORDER_POST = "/";
 
@@ -32,27 +35,32 @@ public class OrderController {
     public static final String GIFT_PATCH = "/gift";
 
     @PostMapping(ORDER_POST)
-    public ResponseDto<OrderPostResponseDto> postOrder(@Valid @RequestBody OrderPostRequestDto requestBody){
-        ResponseDto<OrderPostResponseDto> result = orderService.postOrder(requestBody);
-        return result;
+    public ResponseEntity<ResponseDto<OrderPostResponseDto>> postOrder(@Valid @RequestBody OrderPostRequestDto dto) {
+        ResponseDto<OrderPostResponseDto> response = orderService.postOrder(dto);
+        HttpStatus status = response.isResult() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
     }
 
     @GetMapping(ORDER_GET_LIST)
-    public ResponseDto<List<OrderGetListResponseDto>> getOrderList(@AuthenticationPrincipal String userId) {
-        ResponseDto<List<OrderGetListResponseDto>> result = orderService.getOrderList(userId);
-        return result;
+    public ResponseEntity<ResponseDto<List<OrderGetListResponseDto>>> getOrderList(@AuthenticationPrincipal String userId) {
+        ResponseDto<List<OrderGetListResponseDto>> response = orderService.getOrderList(userId);
+        HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
     }
+
 
     @GetMapping(GIFT_GET_GIFTCODE)
-    public ResponseDto<GiftGetResponseDto> getGiftCode(@PathVariable("giftCode") int giftCode){
+    public ResponseEntity<ResponseDto<GiftGetResponseDto>> getGiftCode(@PathVariable("giftCode") int giftCode){
         ResponseDto<GiftGetResponseDto> response = orderService.getGiftCode(giftCode);
-        return response;
+        HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
     }
+
 
     @PatchMapping(GIFT_PATCH)
-    public ResponseDto<GiftPatchResponseDto> patchGift(@Valid @RequestBody GiftPatchRequestDto requsetBody){
-        ResponseDto<GiftPatchResponseDto> response = orderService.patchGift(requsetBody);
-        return response;
+    public ResponseEntity<ResponseDto<GiftPatchResponseDto>> patchGift(@Valid @RequestBody GiftPatchRequestDto dto){
+        ResponseDto<GiftPatchResponseDto> response = orderService.patchGift(dto);
+        HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
     }
-
 }

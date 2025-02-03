@@ -12,5 +12,14 @@ public class CartPostRequestDto {
     private int cartProductId;
     @NotNull
     private int cartProductAmount;
+    @NotNull
+    private String cartProductName;
+    @NotNull
+    private String cartProductImg;
+    @NotNull
+    private int cartProductPrice;
+//    @NotNull
+//    private int cartProductQuantity;
+
 
 }

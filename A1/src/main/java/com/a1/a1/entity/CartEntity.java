@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.print.attribute.standard.MediaSize;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -17,7 +19,9 @@ public class CartEntity {
     //  카트 시퀀스
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_id")
     private int cartId;
+
     //  유저 아이디
     private String cartUserId;
     //  제품 아이디

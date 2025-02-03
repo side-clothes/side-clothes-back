@@ -11,7 +11,6 @@ import com.a1.a1.dto.response.order.OrderPostResponseDto;
 import com.a1.a1.entity.GiftEntity;
 import com.a1.a1.entity.OrderDetailEntity;
 import com.a1.a1.entity.OrderEntity;
-import com.a1.a1.entity.ProductEntity;
 import com.a1.a1.repository.GiftRepository;
 import com.a1.a1.repository.OrderDetailRepository;
 import com.a1.a1.repository.OrderRepository;
@@ -36,54 +35,48 @@ public class OrderServiceImpl implements OrderService {
 
         OrderPostResponseDto data = null;
 
-        int productId = dto.getProductId();
-
-        try {
-
-            ProductEntity productEntity = productRepository.findByProductSeq(productId);
-            if (productEntity == null) return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_ORDER_PRODUCT);
-
-            OrderEntity orderEntity = new OrderEntity(dto, productEntity);
-            OrderDetailEntity orderDetailEntity = new OrderDetailEntity(dto, orderEntity, productEntity);
-
-            orderRepository.save(orderEntity);
-            orderDetailRepository.save(orderDetailEntity);
-
-            data = new OrderPostResponseDto(orderEntity, orderDetailEntity);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
-
-        }
-
-        String guestPassword = dto.getOrderGuestPassword();
-        String guestPasswordCheck = dto.getOrderGuestPasswordCheck();
-
+        boolean orderUserWhether = false;
+        String orderGuestPassword = dto.getOrderGuestPassword();
+        String orderGuestPasswordCheck = dto.getOrderGuestPasswordCheck();
         String orderUserId = dto.getOrderUserId();
-
-        if (orderUserId != null) return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
-        else {
-
-            if (guestPassword != null) {
-                try {
-
-                    if (!guestPassword.equals(guestPasswordCheck))
-                        return ResponseDto.setFailed(ResponseMessage.NOT_MATCH_GUESTPASSWORD);
-
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                    return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
-                }
-
-                return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
-            }
+        int orderGiftCode = dto.getOrderGiftCode();
+        int productId = dto.getProductId();
+        int orderCount = dto.getOrderCount();
+        String orderUserName = dto.getOrderUserName();
+        String orderUserPhone = dto.getOrderUserPhone();
+        String orderUserEmail = dto.getOrderUserEmail();
+        String orderRecieptName = dto.getOrderRecieptName();
+        String orderRecieptPhone = dto.getOrderRecieptPhone();
+        String orderShipAddress = dto.getOrderShipAddress();
+        String orderShipAddressDetail = dto.getOrderShipAddressDetail();
+        String orderShipMessage = dto.getOrderShipMessage();
+        try {
+            OrderEntity orderEntity = OrderEntity.builder()
+                    .orderUserName(orderUserName)
+                    .orderUserPhone(orderUserPhone)
+                    .orderUserEmail(orderUserEmail)
+                    .orderRecieptName(orderRecieptName)
+                    .orderRecieptPhone(orderRecieptPhone)
+                    .orderShipAddress(orderShipAddress)
+                    .orderShipAddressDetail(orderShipAddressDetail)
+                    .orderShipMessage(orderShipMessage)
+                    .orderGiftCode(orderGiftCode)
+                    .orderUserWhether(orderUserWhether)
+                    .orderGuestPassword(orderGuestPassword)
+                    .orderGuestPassword(orderGuestPasswordCheck)
+                    .orderUserId(orderUserId)
+                    .build();
+            orderRepository.save(orderEntity);
+            data = new OrderPostResponseDto(orderEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
     }
+
+
+
 
     public ResponseDto<List<OrderGetListResponseDto>> getOrderList(String userId) {
 

@@ -1,9 +1,7 @@
 package com.a1.a1.entity;
 
 import com.a1.a1.dto.request.order.OrderPostRequestDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +20,8 @@ import java.util.UUID;
 public class OrderEntity {
     //  주문번호 uuid
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_number")
     private String orderNumber;
     //  회원여부
     private boolean orderUserWhether;

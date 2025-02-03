@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,4 +29,13 @@ public class CartPostResponseDto {
         this.cartProductAmount = cartEntity.getCartProductAmount();
     }
 
+    public CartPostResponseDto(CartEntity cartEntity) {
+        this.cartId = cartEntity.getCartId();
+        this.cartUserId = cartEntity.getCartUserId();
+        this.cartProductId = cartEntity.getCartProductId();
+        this.cartProductName = cartEntity.getCartProductName();
+        this.cartProductImage = cartEntity.getCartProductImage();
+        this.cartProductPrice = cartEntity.getCartProductPrice();
+        this.cartProductAmount = cartEntity.getCartProductAmount();
+    }
 }
