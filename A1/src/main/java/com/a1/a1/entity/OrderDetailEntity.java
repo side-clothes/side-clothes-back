@@ -35,6 +35,6 @@ public class OrderDetailEntity {
         this.orderNumber = order.getOrderNumber();
         this.productPrice = product.getProductPrice();
         this.productTitle = product.getProductName();
-        this.productImageUrl = product.getProductImageUrl();
+        this.productImageUrl = product.getProductThumbnailImageUrl();
     }
 }

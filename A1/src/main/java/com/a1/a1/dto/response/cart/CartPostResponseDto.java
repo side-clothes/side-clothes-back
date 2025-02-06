@@ -22,9 +22,9 @@ public class CartPostResponseDto {
     public CartPostResponseDto(CartEntity cartEntity, ProductEntity product) {
         this.cartId = cartEntity.getCartId();
         this.cartUserId = cartEntity.getCartUserId();
-        this.cartProductId = product.getProductSeq();
+        this.cartProductId = product.getProductId();
         this.cartProductName = product.getProductName();
-        this.cartProductImage = product.getProductImageUrl();
+        this.cartProductImage = product.getProductThumbnailImageUrl();
         this.cartProductPrice = product.getProductPrice();
         this.cartProductAmount = cartEntity.getCartProductAmount();
     }

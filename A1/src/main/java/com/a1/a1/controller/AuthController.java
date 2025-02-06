@@ -10,6 +10,8 @@ import com.a1.a1.dto.response.auth.SignUpPostResponseDto;
 import com.a1.a1.service.implement.AuthServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,15 +34,17 @@ public class AuthController {
     private static final String POST_SEND_PASSWORD_EMAIL = "/sendPassword/{userEmail}";
 
     @PostMapping(POST_SIGN_UP)
-    public ResponseDto<SignUpPostResponseDto> signUp(@Valid @RequestBody SignUpRequestDto requestBody) {
+    public ResponseEntity<ResponseDto<SignUpPostResponseDto>> signUp(@Valid @RequestBody SignUpRequestDto requestBody) {
         ResponseDto<SignUpPostResponseDto> response = authService.signUp(requestBody);
-        return response;
+        HttpStatus status = response.isResult() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
     }
 
     @PostMapping(POST_SIGN_IN)
-    public ResponseDto<SignInPostResponseDto> signIn(@Valid @RequestBody SignInRequestDto requestBody) {
+    public ResponseEntity<ResponseDto<SignInPostResponseDto>> signIn(@Valid @RequestBody SignInRequestDto requestBody) {
         ResponseDto<SignInPostResponseDto> response = authService.signIn(requestBody);
-        return response;
+        HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
     }
 
     @PostMapping(POST_FIND_ID)

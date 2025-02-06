@@ -37,9 +37,9 @@ public class CartEntity {
 
     public CartEntity(String userId, CartPostRequestDto dto, ProductEntity product) {
         this.cartUserId = userId;
-        this.cartProductId = product.getProductSeq();
+        this.cartProductId = product.getProductId();
         this.cartProductName = product.getProductName();
-        this.cartProductImage = product.getProductImageUrl();
+        this.cartProductImage = product.getProductThumbnailImageUrl();
         this.cartProductPrice = product.getProductPrice();
         this.cartProductAmount = dto.getCartProductAmount();
     }

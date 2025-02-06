@@ -5,6 +5,8 @@ import com.a1.a1.dto.response.ResponseDto;
 import com.a1.a1.dto.response.productCategory.ProductGenreGetListResponseDto;
 import com.a1.a1.dto.response.productCategory.ProductGetResponseDto;
 import com.a1.a1.entity.ProductEntity;
+import com.a1.a1.entity.type.Main_category;
+import com.a1.a1.entity.type.Recommend_category;
 import com.a1.a1.repository.ProductRepository;
 import com.a1.a1.service.ProductCategoryService;
 import lombok.RequiredArgsConstructor;
@@ -21,17 +23,17 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
 
     // 장르별 상품 조회
-    public ResponseDto<ProductGenreGetListResponseDto> getProductGenreList(String productGenreCategory, String productSubGenreCategory) {
+    public ResponseDto<ProductGenreGetListResponseDto> getProductGenreList(Enum<Main_category> mainCategory, Enum<Recommend_category> recommendCategory) {
 
         ProductGenreGetListResponseDto data = null;
 
         List<ProductEntity> productGenreList = null;
 
-        if(productSubGenreCategory.equals("0"))
+        if(recommendCategory.equals("0"))
 
             try {
 
-                productGenreList = productRepository.findByProductGenre(productGenreCategory);
+                productGenreList = productRepository.findByMainCategory(mainCategory);
 
                 data = new ProductGenreGetListResponseDto(productGenreList);
 
@@ -44,7 +46,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
             try {
 
-                productGenreList = productRepository.findByProductGenreAndProductSubGenre(productGenreCategory, productSubGenreCategory);
+                productGenreList = productRepository.findByMainCategoryAndRecommendCategory(mainCategory, recommendCategory);
 
                 data = new ProductGenreGetListResponseDto(productGenreList);
 
@@ -63,7 +65,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
         try {
 
-            ProductEntity productEntity = productRepository.findByProductSeq(productSeq);
+            ProductEntity productEntity = productRepository.findByProductId(productSeq);
 
             data = new ProductGetResponseDto(productEntity);
 
