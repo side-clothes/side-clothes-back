@@ -30,7 +30,7 @@ public class UserPatchResponseDto {
         this.userName = userEntity.getUserName();
         this.userPhone = userEntity.getUserPhone();
         this.userBirth = userEntity.getUserBirth();
-        this.userSignUpDate = userEntity.getUserSignUpDate();
+        this.userSignUpDate = userEntity.getSignUpDate();
 
     }
 }

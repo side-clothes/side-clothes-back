@@ -38,9 +38,9 @@ public class UserEntity {
     //	생일
     private String userBirth;
     //	가입 날짜
-    private String userSignUpDate;
+    private String signUpDate;
     //	탈퇴 날짜
-    private String userWithdraw;
+    private String withdrawDate;
 
     public UserEntity(SignUpRequestDto dto) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -53,7 +53,7 @@ public class UserEntity {
         this.userName = dto.getUserName();
         this.userPhone = dto.getUserPhone();
         this.userBirth = dto.getUserBirth();
-        this.userSignUpDate = dateFormat.format(new Date());
+        this.signUpDate = dateFormat.format(new Date());
     }
 
     public void setPatchUser(UserPatchRequestDto dto) {
