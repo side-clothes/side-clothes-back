@@ -185,6 +185,7 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
+    // 임시 비밀번호 전송
     public ResponseDto<Boolean> sendPasswordEmail(SendPasswordEmailRequestDto dto) {
 
         String userEmail = dto.getUserEmail();
