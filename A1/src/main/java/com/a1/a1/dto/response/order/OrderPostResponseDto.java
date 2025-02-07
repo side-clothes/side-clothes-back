@@ -1,54 +1,69 @@
 package com.a1.a1.dto.response.order;
 
-import com.a1.a1.entity.OrderEntity;
+import com.a1.a1.entity.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class OrderPostResponseDto {
+    private Long orderId;
 
-    private boolean orderUserWhether;
-    private String orderGuestPassword;
-    private String orderGuestPasswordCheck;
-    private String orderUserId;
-    private String orderGiftCode;
-    @NotBlank
-    private String orderUserName;
-    @NotBlank
-    private String orderUserPhone;
-    @NotBlank
-    private String orderUserEmail;
-    @NotBlank
-    private String orderRecieptName;
-    @NotBlank
-    private String orderRecieptPhone;
-    @NotBlank
+    private Long userId;
+
+    private Long couponId;
+
+    private String orderReceiptName;
+
+    private String orderReceiptPhone;
+
     private String orderShipAddress;
-    @NotBlank
+
     private String orderShipAddressDetail;
-    private String orderShipMessage;
 
-    @NotNull
-    private int productId;
-    @NotNull
-    private int orderCount;
+    private LocalDateTime orderDateTime;
 
-    // 생성자 수정: OrderEntity에서 필요한 값을 가져오기
-    public OrderPostResponseDto(OrderEntity orderEntity) {
-        this.orderUserName = orderEntity.getOrderUserName();
-        this.orderUserPhone = orderEntity.getOrderUserPhone();
-        this.orderUserEmail = orderEntity.getOrderUserEmail();
-        this.orderRecieptName = orderEntity.getOrderRecieptName();
-        this.orderRecieptPhone = orderEntity.getOrderRecieptPhone();
+    private Long deliveryAddressId;
+
+    private int orderTotalPrice;
+
+    private int detailSeq;
+
+    private Long productId;
+
+    private int productPrice;
+
+    private String productName;
+
+    private String productImgUrl;
+
+    private int productCount;
+
+
+    public OrderPostResponseDto(OrderEntity orderEntity, OrderDetailEntity orderDetailEntity, Long productId,Long userId, Long couponId,Long deliveryAddressId,int productPrice,String productName) {
+        this.orderId = orderEntity.getOrderId();
+        this.userId = userId;
+        this.couponId = couponId;
+        this.orderReceiptName = orderEntity.getOrderReceiptName();
+        this.orderReceiptPhone = orderEntity.getOrderReceiptPhone();
         this.orderShipAddress = orderEntity.getOrderShipAddress();
         this.orderShipAddressDetail = orderEntity.getOrderShipAddressDetail();
-        this.orderShipMessage = orderEntity.getOrderShipMessage();
-        this.orderGiftCode = String.valueOf(orderEntity.getOrderGiftCode());
-        this.orderUserId = orderEntity.getOrderUserId();
-        this.orderUserWhether = orderEntity.isOrderUserWhether();
-       // 확인할 필요 있음
+        this.orderDateTime = LocalDateTime.now();
+        this.orderTotalPrice = orderEntity.getOrderTotalPrice();
+        this.detailSeq = orderDetailEntity.getOrderDetailSeq();
+        this.productId = productId;
+        this.productPrice = productPrice;
+        this.productName = productName;
+        this.productImgUrl = orderDetailEntity.getProductImageUrl();
+        this.productCount = orderDetailEntity.getProductCount();
+        this.deliveryAddressId = deliveryAddressId;
     }
+
+
 }

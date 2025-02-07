@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.print.attribute.standard.MediaSize;
+import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -20,27 +20,41 @@ public class CartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
-    private int cartId;
+    private Long cartId;
 
-    //  유저 아이디
-    private String cartUserId;
-    //  제품 아이디
-    private int cartProductId;
-    //  제품 이름
+    // 유저아이디
+    @Column(name = "user_id")
+    private Long userId;
+
+    // 제품 아이디
+    @Column(name = "product_id")
+    private Long productId;
+
+    // 제품 이름
+    @Column(name = "cart_product_name")
     private String cartProductName;
-    //  제품 이미지
-    private String cartProductImage;
-    //  제품 개당 가격
+
+    // 제품 가격
+    @Column(name = "cart_product_price")
     private int cartProductPrice;
-    //  제품 개수
+
+    // 제품 썸네일 이미지
+    @Column(name = "product_thumbnail_image_url")
+    private String productThumbnailImageUrl;
+
+    // 제품 개수
+    @Column(name = "cart_product_amount")
     private int cartProductAmount;
 
-    public CartEntity(String userId, CartPostRequestDto dto, ProductEntity product) {
-        this.cartUserId = userId;
-        this.cartProductId = product.getProductSeq();
+
+
+
+    public CartEntity(Long userId, CartPostRequestDto dto, ProductEntity product) {
+        this.userId = userId;
+        this.productId = product.getProductId();
         this.cartProductName = product.getProductName();
-        this.cartProductImage = product.getProductImageUrl();
         this.cartProductPrice = product.getProductPrice();
+        this.productThumbnailImageUrl = product.getProductThumbnailImageUrl();
         this.cartProductAmount = dto.getCartProductAmount();
     }
 }

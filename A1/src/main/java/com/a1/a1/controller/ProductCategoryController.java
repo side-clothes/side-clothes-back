@@ -4,6 +4,8 @@ import com.a1.a1.common.constant.ApiMappingPattern;
 import com.a1.a1.dto.response.ResponseDto;
 import com.a1.a1.dto.response.productCategory.ProductGenreGetListResponseDto;
 import com.a1.a1.dto.response.productCategory.ProductGetResponseDto;
+import com.a1.a1.entity.type.Main_category;
+import com.a1.a1.entity.type.Recommend_category;
 import com.a1.a1.service.implement.ProductCategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +27,15 @@ public class ProductCategoryController<BookListServicevice> {
 
 
 
-    // 장르별 상품 조회
+    // 장르별 상품 조회 (미구현)
     @GetMapping(GET_PRODUCT_GENRE_LIST)
-    public ResponseDto<ProductGenreGetListResponseDto> getProductGenreList(@PathVariable("produtGenreCategory") String productGenreCategory, @PathVariable("productSubGenreCategory") String productSubGenreCategory) {
+    public ResponseDto<ProductGenreGetListResponseDto> getProductGenreList(@PathVariable("MainCategory") Enum<Main_category> mainCategory, @PathVariable("RecommendCategory")  Enum<Recommend_category> recommendCategory) {
         ResponseDto<ProductGenreGetListResponseDto> response
-                = productCategoryService.getProductGenreList(productGenreCategory, productSubGenreCategory);
+                = productCategoryService.getProductGenreList(mainCategory, recommendCategory);
         return response;
     }
 
-    // 단건 상품 조회
+    // 단건 상품 조회 (미구현)
     @GetMapping(GET_PRODUCT)
     public ResponseDto<ProductGetResponseDto> getProduct(@PathVariable("productSeq") int productSeq) {
         ResponseDto<ProductGetResponseDto> response

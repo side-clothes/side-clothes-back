@@ -2,40 +2,35 @@ package com.a1.a1.dto.response.cart;
 
 import com.a1.a1.entity.CartEntity;
 import com.a1.a1.entity.ProductEntity;
+import com.a1.a1.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartPostResponseDto {
-    private int cartId;
-    private String cartUserId;
-    private int cartProductId;
+    private Long cartId;
+    private Long productId;
+    private Long userId;
     private String cartProductName;
-    private String cartProductImage;
     private int cartProductPrice;
+    private String productThumbnailImageUrl;
     private int cartProductAmount;
 
-    public CartPostResponseDto(CartEntity cartEntity, ProductEntity product) {
+    public CartPostResponseDto(CartEntity cartEntity, Long productId, Long userId, String cartProductName, int cartProductPrice, String productThumbnailImageUrl, int cartProductAmount) {
         this.cartId = cartEntity.getCartId();
-        this.cartUserId = cartEntity.getCartUserId();
-        this.cartProductId = product.getProductSeq();
-        this.cartProductName = product.getProductName();
-        this.cartProductImage = product.getProductImageUrl();
-        this.cartProductPrice = product.getProductPrice();
-        this.cartProductAmount = cartEntity.getCartProductAmount();
-    }
+        this.productId = productId;
+        this.userId = userId;
+        this.cartProductName = cartProductName;
+        this.cartProductPrice = cartProductPrice;
+        this.productThumbnailImageUrl = productThumbnailImageUrl;
+        this.cartProductAmount = cartProductAmount;
 
-    public CartPostResponseDto(CartEntity cartEntity) {
-        this.cartId = cartEntity.getCartId();
-        this.cartUserId = cartEntity.getCartUserId();
-        this.cartProductId = cartEntity.getCartProductId();
-        this.cartProductName = cartEntity.getCartProductName();
-        this.cartProductImage = cartEntity.getCartProductImage();
-        this.cartProductPrice = cartEntity.getCartProductPrice();
-        this.cartProductAmount = cartEntity.getCartProductAmount();
+
     }
 }

@@ -1,6 +1,7 @@
 package com.a1.a1.dto.response.ask;
 
 import com.a1.a1.entity.AskEntity;
+import com.a1.a1.entity.UserEntity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AskPostResponseDto {
     private int askId;
-    private String askWriter;
+    private Long userId;
     private int askSort;
     private String askTitle;
     @NotBlank
@@ -23,9 +24,9 @@ public class AskPostResponseDto {
     private int askStatus;
     private String askReply;
 
-    public AskPostResponseDto(AskEntity askEntity){
+    public AskPostResponseDto(AskEntity askEntity,Long userId) {
         this.askId = askEntity.getAskId();
-        this.askWriter = askEntity.getAskWriter();
+        this.userId =userId;
         this.askSort = askEntity.getAskSort();
         this.askTitle = askEntity.getAskTitle();
         this.askContent = askEntity.getAskContent();
@@ -33,4 +34,5 @@ public class AskPostResponseDto {
         this.askStatus = askEntity.getAskStatus();
         this.askReply = askEntity.getAskReply();
     }
+
 }

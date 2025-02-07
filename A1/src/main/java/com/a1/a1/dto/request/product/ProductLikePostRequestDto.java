@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class ProductLikePostRequestDto {
 
     @NotNull
-    private int productSeq;
+    private int productId;
 }

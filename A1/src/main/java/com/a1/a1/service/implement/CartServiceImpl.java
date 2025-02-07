@@ -6,7 +6,6 @@ import com.a1.a1.dto.request.cart.CartPostRequestDto;
 import com.a1.a1.dto.response.ResponseDto;
 import com.a1.a1.dto.response.cart.*;
 import com.a1.a1.entity.CartEntity;
-import com.a1.a1.entity.ProductEntity;
 import com.a1.a1.repository.CartRepository;
 import com.a1.a1.repository.ProductRepository;
 import com.a1.a1.service.CartService;
@@ -23,41 +22,39 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
     // 카트 등록
-    public ResponseDto<CartPostResponseDto> postCart(String userId, CartPostRequestDto dto) {
+    public ResponseDto<CartPostResponseDto> postCart(Long userId, CartPostRequestDto dto) {
         CartPostResponseDto data = null;
-        int cartProductId = dto.getCartProductId();
+        Long productId = dto.getProductId();
+        Long cartId = dto.getCartId();
         int cartProductAmount = dto.getCartProductAmount();
         String cartProductName = dto.getCartProductName();
-        String cartProductImage = dto.getCartProductImg();
+        String productThumbnailImageUrl = dto.getProductThumbnailImageUrl();
         int cartProductPrice = dto.getCartProductPrice();
         try {
             CartEntity cartEntity = CartEntity.builder()
-                    .cartProductId(cartProductId)
-                    .cartProductPrice(cartProductAmount)
-                    .cartUserId(userId)
-                    .cartProductAmount(cartProductAmount)
+                    .productId(productId)
                     .cartProductName(cartProductName)
-                    .cartProductImage(cartProductImage)
+                    .cartProductAmount(cartProductAmount)
+                    .productThumbnailImageUrl(productThumbnailImageUrl)
                     .cartProductPrice(cartProductPrice)
+                    .cartId(cartId)
                     .build();
-            cartRepository.save(cartEntity);
-            ProductEntity ProductEntity = new ProductEntity();
-            productRepository.save(ProductEntity);
-            data = new CartPostResponseDto(cartEntity);
-        } catch (Exception e){
+            cartEntity = cartRepository.save(cartEntity);
+            data = new CartPostResponseDto(cartEntity,productId,userId,productThumbnailImageUrl,cartProductPrice,cartProductName,cartProductAmount);
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS,data);
     }
 
-    public ResponseDto<CartGetResponseDto> get(String userId) {
+    public ResponseDto<CartGetResponseDto> get(Long userId) {
 
         CartGetResponseDto data = null;
 
         try {
 
-            List<CartEntity> cartList = cartRepository.findByCartUserId(userId);
+            List<CartEntity> cartList = (List<CartEntity>) cartRepository.findByCartId(userId);
             if (cartList == null) return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_CARTLIST);
 
             data = new CartGetResponseDto(cartList);
@@ -93,7 +90,7 @@ public class CartServiceImpl implements CartService {
     // 카트 삭제 아이디로
     @Override
     @Transactional
-    public ResponseDto<Boolean> deleteByCartId(int cartId) {
+    public ResponseDto<Boolean> deleteByCartId(Long cartId) {
         try {
             cartRepository.deleteByCartId(cartId);
         } catch (Exception e){
@@ -103,18 +100,18 @@ public class CartServiceImpl implements CartService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, true);
     }
 
-    public ResponseDto<CartDeleteAllResponseDto> deleteAll(String cartUserId) {
+    public ResponseDto<CartDeleteAllResponseDto> deleteAll(Long userId) {
 
         CartDeleteAllResponseDto data = null;
 
         try {
 
-            List<CartEntity> cartList = cartRepository.findByCartUserId(cartUserId);
+            List<CartEntity> cartList = (List<CartEntity>) cartRepository.findByCartId(userId);
             if (cartList == null) return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_CART);
 
             cartRepository.deleteAll(cartList);
 
-            cartList = cartRepository.findByCartUserId(cartUserId);
+            cartList = (List<CartEntity>) cartRepository.findByCartId(userId);
 
             data = new CartDeleteAllResponseDto(cartList);
 

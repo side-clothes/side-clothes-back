@@ -18,14 +18,15 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    public ResponseDto<ProductLikePostResponseDto> postPoductLike(ProductLikePostRequestDto dto) {
+    // 좋아요 누르기
+    public ResponseDto<ProductLikePostResponseDto> postProductLike(ProductLikePostRequestDto dto) {
 
         ProductLikePostResponseDto data = null;
-        int productSeq = dto.getProductSeq();
+        int productSeq = dto.getProductId();
 
         try {
 
-            ProductEntity productEntity = productRepository.findByProductSeq(productSeq);
+            ProductEntity productEntity = productRepository.findByProductId(productSeq);
             productEntity.setProductLike(productEntity.getProductLike() + 1);
 
             productRepository.save(productEntity);
@@ -41,8 +42,9 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    // 제품명으로 제품 찾기
     public ResponseDto<ProductSearchGetResponseDto> getProductSearch(String productTitle) {
-
+        System.out.println(productTitle);
         ProductSearchGetResponseDto data = null;
 
         try {
@@ -60,6 +62,7 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    // 좋아요 top 10 조회
     public ResponseDto<BestSellerGetResponseDto> getBestSeller() {
 
         BestSellerGetResponseDto data = null;
@@ -79,6 +82,7 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    // 제품 젠체 조회
     public ResponseDto<RandomProductImageGetResponseDto> getRandomProductImage(){
 
         RandomProductImageGetResponseDto data = null;
@@ -96,13 +100,14 @@ public class ProductServiceImpl implements ProductService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-    public ResponseDto<ProductDetailGetProductSeqResponseDto> getProductDetailPage(int productSeq){
+    // Id로 제품 조회
+    public ResponseDto<ProductDetailGetProductSeqResponseDto> getProductDetailPage(int productId){
 
         ProductDetailGetProductSeqResponseDto data = null;
 
         try {
 
-            ProductEntity productEntity = productRepository.findByProductSeq(productSeq);
+            ProductEntity productEntity = productRepository.findByProductId(productId);
 
             data = new ProductDetailGetProductSeqResponseDto(productEntity);
 

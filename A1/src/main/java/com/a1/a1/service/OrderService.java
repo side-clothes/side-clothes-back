@@ -11,9 +11,8 @@ import com.a1.a1.dto.response.order.OrderPostResponseDto;
 import java.util.List;
 
 public interface OrderService {
-    ResponseDto<OrderPostResponseDto> postOrder(OrderPostRequestDto dto);
-    ResponseDto<List<OrderGetListResponseDto>> getOrderList(String userId);
-    ResponseDto<GiftGetResponseDto> getGiftCode(int giftCode);
-    ResponseDto<GiftPatchResponseDto> patchGift(GiftPatchRequestDto dto);
+    ResponseDto<OrderPostResponseDto> postOrder(OrderPostRequestDto dto, Long userId);
+    ResponseDto<List<OrderGetListResponseDto>> getOrderList(Long userId);
+
 
 }

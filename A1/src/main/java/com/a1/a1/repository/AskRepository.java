@@ -14,17 +14,17 @@ public interface AskRepository extends JpaRepository<AskEntity, Integer> {
 //  public List<AskEntity> findByAskWriter(String UserId);
 
 
-//    List<AskEntity> findByAskId(int askId);
-//
-    List<AskEntity> findByAskWriter(String UserId);
+////    List<AskEntity> findByAskId(int askId);
+////
+//    List<AskEntity> findByAskWriter( UserId);
 
-    Optional<List<AskEntity>> getAskAllByAskWriter (String UserId);
+    Optional<List<AskEntity>> getAskAllByAskId (Long id);
 
     AskEntity findByAskId(int askId);
 
     void deleteByAskId(int askId);
 //
-    Optional<AskEntity> findByAskWriterAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(String userId, LocalDateTime askDatetime, int askStatus, int askSort);
+    Optional<AskEntity> findByUserIdAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(Long userId, LocalDateTime askDatetime, int askStatus, int askSort);
 
 //  List<AskEntity> findByAskId(String askId);
 }

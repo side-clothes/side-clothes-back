@@ -36,25 +36,25 @@ public class AskController {
 
     // 문의 생성 - 0
     @PostMapping(ASK_POST)
-    public ResponseEntity<ResponseDto<AskPostResponseDto>> postAsk(@Valid @RequestBody AskPostRequestDto dto, @AuthenticationPrincipal String userId) {
-        ResponseDto<AskPostResponseDto> response = askService.postAsk(dto, userId);
+    public ResponseEntity<ResponseDto<AskPostResponseDto>> postAsk(@Valid @RequestBody AskPostRequestDto dto, @AuthenticationPrincipal Long id) {
+        ResponseDto<AskPostResponseDto> response = askService.postAsk(dto,id);
         HttpStatus status = response.isResult() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(response);
     }
 
     // 문의 전체 조회 - 0
     @GetMapping(ASK_GET_LIST)
-    public ResponseEntity<ResponseDto<List<AskGetListResponseDto>>> getAskAllByAskWriter(@AuthenticationPrincipal String userId
+    public ResponseEntity<ResponseDto<List<AskGetListResponseDto>>> getAskAllByAskId(@AuthenticationPrincipal Long userId
     ){
-        ResponseDto<List<AskGetListResponseDto>> response = askService.getAskAllByAskWriter(userId);
+        ResponseDto<List<AskGetListResponseDto>> response = askService.getAskAllByAskId(userId);
         HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return ResponseEntity.status(status).body(response);
     }
 
      //문의 검색 - x
     @GetMapping(ASK_GET_FIND)
-    public ResponseEntity<ResponseDto<AskGetFindResponseDto>> findByAskWriterAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(@AuthenticationPrincipal String userId, @PathVariable int askStatus, @PathVariable  int months, @PathVariable int askSort) {
-        ResponseDto<AskGetFindResponseDto> response = askService.findByAskWriterAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(userId, askStatus, months, askSort);
+    public ResponseEntity<ResponseDto<AskGetFindResponseDto>> findByUserIdAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(@AuthenticationPrincipal Long userId, @PathVariable int askStatus, @PathVariable  int months, @PathVariable int askSort) {
+        ResponseDto<AskGetFindResponseDto> response = askService.findByUserIdAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(userId, askStatus, months, askSort);
         HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(response);
     }

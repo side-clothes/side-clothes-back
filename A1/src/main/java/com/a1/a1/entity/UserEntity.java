@@ -2,9 +2,7 @@ package com.a1.a1.entity;
 
 import com.a1.a1.dto.request.auth.SignUpRequestDto;
 import com.a1.a1.dto.request.user.UserPatchRequestDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +20,9 @@ import java.util.Date;
 public class UserEntity {
     //	아이디
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String userId;
     //	비밀번호
     private String userPassword;

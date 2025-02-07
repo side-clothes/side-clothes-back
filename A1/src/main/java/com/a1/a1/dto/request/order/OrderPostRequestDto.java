@@ -1,47 +1,67 @@
 package com.a1.a1.dto.request.order;
 
+import com.a1.a1.common.util.ProductObject;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderPostRequestDto {
 
-    private boolean orderUserWhether;
-    private String orderGuestPassword;
-    private String orderGuestPasswordCheck;
-    private String orderUserId;
-    private int orderGiftCode;
+
+    private Long orderId;
+
+    @NotNull
+    private Long userId;
+
+    @NotNull
+    private Long couponId;
+
+    @NotNull
+    private Long productId;
+
+    @NotNull
+    private String orderUserPhone;
+
+    @NotNull
+    private Date orderDatetime;
+
+    @NotNull
+    private Long deliveryAddressId;
 
     @NotBlank
-    private String orderUserName;
+    private String orderReceiptName;
+
     @NotBlank
-    private String orderUserPhone;
-    @NotBlank
-    private String orderUserEmail;
-    @NotBlank
-    private String orderRecieptName;
-    @NotBlank
-    private String orderRecieptPhone;
+    private String orderReceiptPhone;
+
     @NotBlank
     private String orderShipAddress;
+
     @NotBlank
     private String orderShipAddressDetail;
+
     private String orderShipMessage;
 
-    @NotNull
-    private int productId;
-    @NotNull
-    private int orderCount;
 
-    public boolean getOrderUserWhether() {
-        return this.orderUserWhether;
-    }
+    private int orderTotalPrice;
 
+    private int orderDetailSeq;
+
+    private int productPrice;
+
+    private String productName;
+
+    private String productImgUrl;
+
+    private int productCount;
 
 
 }
