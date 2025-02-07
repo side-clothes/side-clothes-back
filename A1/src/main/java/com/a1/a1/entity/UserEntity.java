@@ -45,7 +45,6 @@ public class UserEntity {
 
     public UserEntity(SignUpRequestDto dto) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
         this.userId = dto.getUserId();
         this.userPassword = dto.getUserPassword();
         this.userEmail = dto.getUserEmail();
@@ -58,7 +57,6 @@ public class UserEntity {
     }
 
     public void setPatchUser(UserPatchRequestDto dto) {
-
         this.userAddress = dto.getUserAddress();
         this.userAddressDetail =dto.getUserAddressDetail();
         this.userName = dto.getUserName();

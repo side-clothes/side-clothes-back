@@ -34,6 +34,7 @@ public class AuthServiceImpl implements AuthService {
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public ResponseDto<SignUpPostResponseDto> signUp(SignUpRequestDto dto) {
+
         String userId = dto.getUserId();
         String userEmail = dto.getUserEmail();
         String userPasswordCheck = dto.getUserPasswordCheck();
@@ -44,14 +45,12 @@ public class AuthServiceImpl implements AuthService {
 
         if (userId == null || userId.isEmpty())
             return ResponseDto.setFailed(ResponseMessage.INVALID_USER_ID);
-        if (userRepository.existsById(userId))
+        if (userRepository.existsByUserId(userId))
             return ResponseDto.setFailed(ResponseMessage.EXIST_DATA);
-
         if (userEmail == null || userEmail.isEmpty() || !EmailValidator.getInstance().isValid(userEmail))
             return ResponseDto.setFailed(ResponseMessage.INVALID_EMAIL);
         if (userRepository.existsByUserEmail(userEmail))
             return ResponseDto.setFailed(ResponseMessage.EXIST_DATA);
-
         if (userPassword == null || userPassword.isEmpty() || userPasswordCheck == null || userPasswordCheck.isEmpty())
             return ResponseDto.setFailed(ResponseMessage.INVALID_PASSWORD);
         if (!userPassword.equals(userPasswordCheck))
@@ -59,11 +58,10 @@ public class AuthServiceImpl implements AuthService {
         if (userPassword.length() < 8 || !userPassword.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*])[a-zA-Z\\d!@#$%^&*]{10,}$"))
             return ResponseDto.setFailed(ResponseMessage.WEAK_PASSWORD);
 
-
         RecommendEntity recommendEntity = new RecommendEntity();
 
         if(recommendedUserId != null){
-            if(userRepository.existsById(recommendedUserId)){
+            if(userRepository.existsByUserId(recommendedUserId)){
 
                 try {
                     recommendEntity.setRecommendedUserId(recommendedUserId);

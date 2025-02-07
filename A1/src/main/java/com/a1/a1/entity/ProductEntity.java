@@ -19,7 +19,7 @@ public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private int productId;
+    private Long productId;
     //	메인 카테고리
     @Enumerated(EnumType.STRING)
     private Main_category mainCategory;
