@@ -4,6 +4,8 @@ import com.a1.a1.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {
 
@@ -15,7 +17,7 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
 
     UserEntity findByUserIdAndUserNameAndUserEmail(String userId,String userName,String userEmail);
 
-    UserEntity findByUserId(String UserId);
+    Optional<UserEntity> findByUserId(String UserId);
 
     boolean existsByUserIdAndUserEmail(String userId, String userEmail);
 
