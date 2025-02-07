@@ -43,13 +43,4 @@ public class OrderDetailEntity {
     // 제품 수량
     @Column(name = "product_count")
     private int productCount;
-
-    public OrderDetailEntity(OrderPostRequestDto dto, OrderEntity order, ProductEntity product) {
-        this.productId = dto.getProductId();
-        this.productCount = dto.getOrderCount();
-        this.orderNumber = order.getOrderNumber();
-        this.productPrice = product.getProductPrice();
-        this.productTitle = product.getProductName();
-        this.productImageUrl = product.getProductThumbnailImageUrl();
-    }
 }

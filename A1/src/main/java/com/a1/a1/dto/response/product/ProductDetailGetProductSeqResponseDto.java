@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductDetailGetProductSeqResponseDto {
 
-    private int productId;
+    private Long productId;
     private Enum<Main_category> mainCategory;
     private Enum<Recommend_category> recommendCategory;
     private String productNumber;
