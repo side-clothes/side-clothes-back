@@ -12,6 +12,8 @@ import com.a1.a1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -21,15 +23,20 @@ public class UserServiceImpl implements UserService {
     public ResponseDto<UserGetResponseDto> getUser(String userId) {
 
         UserGetResponseDto data = null;
-
+        UserEntity user = null;
         try {
 
-            UserEntity userEntity = userRepository.findByUserId(userId);
+            Optional<UserEntity> userEntity = userRepository.findByUserId(userId);
+            if(userEntity.isPresent()) {
+                user = userEntity.get();
+            } else {
+                return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
+            }
 
-            if (userEntity != null)
-                userEntity.setUserPassword(ResponseMessage.NULL);
+            if (user != null)
+                user.setUserPassword(ResponseMessage.NULL);
 
-            data = new UserGetResponseDto(userEntity);
+            data = new UserGetResponseDto(user);
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -43,16 +50,22 @@ public class UserServiceImpl implements UserService {
     public ResponseDto<UserPatchResponseDto> patchUser(String userId, UserPatchRequestDto dto) {
 
         UserPatchResponseDto data = null;
+        UserEntity user = null;
 
         try {
 
-            UserEntity userEntity = userRepository.findByUserId(userId);
-            if (userEntity == null) return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_USER);
+            Optional<UserEntity> userEntity = userRepository.findByUserId(userId);
+            if(userEntity.isPresent()) {
+                user = userEntity.get();
+            } else {
+                return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
+            }
+            if (user == null) return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_USER);
 
-            userEntity.setPatchUser(dto);
-            userRepository.save(userEntity);
+            user.setPatchUser(dto);
+            userRepository.save(user);
 
-            data = new UserPatchResponseDto(userEntity);
+            data = new UserPatchResponseDto(user);
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -66,14 +79,19 @@ public class UserServiceImpl implements UserService {
     public ResponseDto<UserDeleteResponseDto> deleteUser(String userId, String userEmail) {
 
         UserDeleteResponseDto data = null;
-
+        UserEntity user = null;
         try {
 
             if (!userRepository.existsByUserIdAndUserEmail(userId, userEmail))
                 return ResponseDto.setFailed("UserId Or UserEmail Does Not Exist");
 
-            UserEntity userEntity = userRepository.findByUserId(userId);
-            userRepository.delete(userEntity);
+            Optional<UserEntity> userEntity = userRepository.findByUserId(userId);
+            if(userEntity.isPresent()) {
+                user = userEntity.get();
+            } else {
+                return ResponseDto.setFailed("UserId Or UserEmail Does Not Exist");
+            }
+            userRepository.delete(user);
 
             data = new UserDeleteResponseDto();
 

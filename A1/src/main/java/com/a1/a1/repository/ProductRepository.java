@@ -20,7 +20,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 
     List<ProductEntity> findByProductNameContaining(String productName);
 
-    @Query(value = "SELECT * FROM products order by RAND() limit 6",nativeQuery = true)
+    @Query(value = "SELECT * FROM products order by RAND()",nativeQuery = true)
     List<ProductEntity> findAll();
 
 }

@@ -44,7 +44,6 @@ public class ProductServiceImpl implements ProductService {
 
     // 제품명으로 제품 찾기
     public ResponseDto<ProductSearchGetResponseDto> getProductSearch(String productTitle) {
-        System.out.println(productTitle);
         ProductSearchGetResponseDto data = null;
 
         try {

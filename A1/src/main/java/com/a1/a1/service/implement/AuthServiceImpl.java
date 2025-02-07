@@ -20,6 +20,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -137,13 +139,17 @@ public class AuthServiceImpl implements AuthService {
 
             if (!password.equals(passwordCheck)) return ResponseDto.setFailed(ResponseMessage.NOT_MATCH_PASSWORD);
 
-            UserEntity userEntity = userRepository.findByUserId(userId);
+            Optional<UserEntity> userEntity = userRepository.findByUserId(userId);
+            if(userEntity.isPresent()) {
+                UserEntity user = userEntity.get();
+                String encodedPassword = passwordEncoder.encode(password);
+                user.setUserPassword(encodedPassword);
+                userRepository.save(user);
 
-            String encodedPassword = passwordEncoder.encode(password);
-            userEntity.setUserPassword(encodedPassword);
-            userRepository.save(userEntity);
-
-            data = new ResetPasswordPostResponseDto(userEntity);
+                data = new ResetPasswordPostResponseDto(user);
+            } else {
+                return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_DATA);
+            }
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -156,25 +162,28 @@ public class AuthServiceImpl implements AuthService {
     public ResponseDto<SignInPostResponseDto> signIn(SignInRequestDto dto) {
 
         SignInPostResponseDto data = null;
-        UserEntity userEntity = null;
-
+        Optional<UserEntity> userEntity = null;
+        UserEntity user = null;
         String userId = dto.getUserId();
         String userPassword = dto.getUserPassword();
 
         try {
 
             userEntity = userRepository.findByUserId(userId);
+            if (userEntity.isPresent()) {
+                user = userEntity.get();
+            }
 
-            boolean matched = passwordEncoder.matches(userPassword, userEntity.getUserPassword());
+            boolean matched = passwordEncoder.matches(userPassword, user.getUserPassword());
             if (!matched)
                 return ResponseDto.setFailed(ResponseMessage.NOT_MATCH_PASSWORD);
 
-            userEntity.setUserPassword(ResponseMessage.NULL);
+            user.setUserPassword(ResponseMessage.NULL);
 
             String token = tokenProvider.generateToken(userId);
             int exprTime = tokenProvider.getExpiration();
 
-            data = new SignInPostResponseDto(token, exprTime, userEntity);
+            data = new SignInPostResponseDto(token, exprTime, user);
 
         } catch (Exception exception) {
             exception.printStackTrace();
