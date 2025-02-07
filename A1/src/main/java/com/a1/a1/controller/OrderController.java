@@ -35,32 +35,21 @@ public class OrderController {
     public static final String GIFT_PATCH = "/gift";
 
     @PostMapping(ORDER_POST)
-    public ResponseEntity<ResponseDto<OrderPostResponseDto>> postOrder(@Valid @RequestBody OrderPostRequestDto dto) {
-        ResponseDto<OrderPostResponseDto> response = orderService.postOrder(dto);
+    public ResponseEntity<ResponseDto<OrderPostResponseDto>> postOrder(@Valid @RequestBody OrderPostRequestDto dto , @AuthenticationPrincipal Long userId ) {
+        ResponseDto<OrderPostResponseDto> response = orderService.postOrder(dto,userId);
         HttpStatus status = response.isResult() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(response);
     }
 
     @GetMapping(ORDER_GET_LIST)
-    public ResponseEntity<ResponseDto<List<OrderGetListResponseDto>>> getOrderList(@AuthenticationPrincipal String userId) {
+    public ResponseEntity<ResponseDto<List<OrderGetListResponseDto>>> getOrderList(@AuthenticationPrincipal Long userId) {
         ResponseDto<List<OrderGetListResponseDto>> response = orderService.getOrderList(userId);
         HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(response);
     }
 
 
-    @GetMapping(GIFT_GET_GIFTCODE)
-    public ResponseEntity<ResponseDto<GiftGetResponseDto>> getGiftCode(@PathVariable("giftCode") int giftCode){
-        ResponseDto<GiftGetResponseDto> response = orderService.getGiftCode(giftCode);
-        HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        return ResponseEntity.status(status).body(response);
-    }
 
 
-    @PatchMapping(GIFT_PATCH)
-    public ResponseEntity<ResponseDto<GiftPatchResponseDto>> patchGift(@Valid @RequestBody GiftPatchRequestDto dto){
-        ResponseDto<GiftPatchResponseDto> response = orderService.patchGift(dto);
-        HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        return ResponseEntity.status(status).body(response);
-    }
+
 }

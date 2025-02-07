@@ -9,13 +9,20 @@ import lombok.NoArgsConstructor;
 public class CartPostRequestDto {
 
     @NotNull
-    private int cartProductId;
+    private Long cartId;
+
+    @NotNull
+    private Long productId;
+
     @NotNull
     private int cartProductAmount;
+
     @NotNull
     private String cartProductName;
+
     @NotNull
-    private String cartProductImg;
+    private String productThumbnailImageUrl;
+
     @NotNull
     private int cartProductPrice;
 //    @NotNull

@@ -52,9 +52,9 @@ public class JwtProvider {
         return bearerToken.substring("Bearer ".length());
     }
 
-    public Long getIdFromJwt(String token) {
+    public String getIdFromJwt(String token) {
         Claims claims = getClaims(token);
-        return claims.get("id", Long.class);
+        return claims.get("id", String.class);
     }
 
     public boolean isValidToken(String token) {

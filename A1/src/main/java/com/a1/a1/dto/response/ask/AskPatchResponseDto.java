@@ -1,6 +1,7 @@
 package com.a1.a1.dto.response.ask;
 
 import com.a1.a1.entity.AskEntity;
+import com.a1.a1.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AskPatchResponseDto {
     private int askId;
-    private String askWriter;
+    private Long userId;
     private int askSort;
     private String askTitle;
     private String askContent;
@@ -20,9 +21,9 @@ public class AskPatchResponseDto {
     private int askStatus;
     private String askReply;
 
-    public AskPatchResponseDto(AskEntity askEntity){
+    public AskPatchResponseDto(AskEntity askEntity, UserEntity user) {
         this.askId = askEntity.getAskId();
-        this.askWriter = askEntity.getAskWriter();
+        this.userId =user.getId();
         this.askSort = askEntity.getAskSort();
         this.askTitle = askEntity.getAskTitle();
         this.askContent = askEntity.getAskContent();
