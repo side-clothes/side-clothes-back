@@ -49,10 +49,12 @@ public class CartEntity {
 
 
 
+
     public CartEntity(Long userId, CartPostRequestDto dto, ProductEntity product) {
         this.userId = userId;
         this.productId = product.getProductId();
         this.cartProductName = product.getProductName();
+
         this.cartProductPrice = product.getProductPrice();
         this.productThumbnailImageUrl = product.getProductThumbnailImageUrl();
         this.cartProductAmount = dto.getCartProductAmount();

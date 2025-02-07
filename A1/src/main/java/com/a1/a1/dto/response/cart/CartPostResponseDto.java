@@ -31,6 +31,5 @@ public class CartPostResponseDto {
         this.productThumbnailImageUrl = productThumbnailImageUrl;
         this.cartProductAmount = cartProductAmount;
 
-
     }
 }
