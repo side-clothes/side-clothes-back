@@ -8,14 +8,14 @@ import com.a1.a1.dto.response.auth.ResetPasswordPostResponseDto;
 import com.a1.a1.dto.response.auth.SignInPostResponseDto;
 import com.a1.a1.dto.response.auth.SignUpPostResponseDto;
 import com.a1.a1.service.implement.AuthServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping(ApiMappingPattern.AUTH)
@@ -27,11 +27,10 @@ public class AuthController {
 
     private static final String POST_SIGN_UP = "/signUp";
     private static final String POST_SIGN_IN = "/signIn";
-
     private static final String POST_FIND_ID = "/findId";
-
     private static final String POST_RESET_PASSWORD = "/resetPassword";
     private static final String POST_SEND_PASSWORD_EMAIL = "/sendPassword";
+    private static final String REDIRECT_LOGIN = "/auth";
 
     @PostMapping(POST_SIGN_UP)
     public ResponseEntity<ResponseDto<SignUpPostResponseDto>> signUp(@Valid @RequestBody SignUpRequestDto requestBody) {
@@ -66,5 +65,4 @@ public class AuthController {
         HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(response);
     }
-
 }

@@ -43,6 +43,19 @@ public class UserEntity {
     //	탈퇴 날짜
     private String withdrawDate;
 
+    // sns 가입 경로
+    private String joinPath;
+
+    // sns 사용자 아이디
+    private String snsId;
+
+    @PrePersist
+    private void setDefaultValues() {
+        if(this.joinPath == null) {
+            this.joinPath = "HOME";
+        }
+    }
+
     public UserEntity(SignUpRequestDto dto) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         this.userId = dto.getUserId();

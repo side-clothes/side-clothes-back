@@ -1,6 +1,8 @@
 package com.a1.a1.config;
 
 import com.a1.a1.filter.JwtAuthenticationFilter;
+import com.a1.a1.handler.OAuth2SuccessHandler;
+import com.a1.a1.service.implement.OAuth2UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +34,8 @@ public class WebSecurityConfig {
     @Lazy
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final OAuth2UserServiceImpl oAuth2Service;
 
     @Bean
     public CorsFilter corsFilter() {
@@ -61,6 +65,12 @@ public class WebSecurityConfig {
                         )
                         .permitAll()
                         .anyRequest().authenticated())
+                .oauth2Login(oauth2 -> oauth2
+                        .redirectionEndpoint(endPoint -> endPoint.baseUri("/oauth2/callback/*"))
+                        .authorizationEndpoint(endPoint -> endPoint.baseUri("/api/v1/auth/sns-sign-in"))
+                        .userInfoEndpoint(endPoint -> endPoint.userService(oAuth2Service))
+                        .successHandler(oAuth2SuccessHandler)
+                )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
