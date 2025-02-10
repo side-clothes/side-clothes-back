@@ -17,10 +17,13 @@ public class ProductImageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productImageId;
 
-    @Column(name = "product_id")
-    private Long productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private ProductEntity productEntity;
 
     @Column(name = "product_image")
     private String productImage;
+
+
 
 }

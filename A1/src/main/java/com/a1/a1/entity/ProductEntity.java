@@ -8,8 +8,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="products")
@@ -44,5 +47,9 @@ public class ProductEntity {
     private String productThumbnailImageUrl;
     //	판매량
     private int productSalesCount;
+    // 제품 이미지
+    @Builder.Default
+    @OneToMany
+    private List<ProductImageEntity> productImages = new ArrayList<>();
 
 }
