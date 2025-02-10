@@ -31,15 +31,15 @@ public class CartController {
 
     // 카트 생성
     @PostMapping(CART_POST)
-    public ResponseEntity<ResponseDto<CartPostResponseDto>> postCart(@AuthenticationPrincipal String userId, @Valid @RequestBody CartPostRequestDto requestBody){
-        ResponseDto<CartPostResponseDto> response = cartService.postCart(userId, requestBody);
+    public ResponseEntity<ResponseDto<CartPostResponseDto>> postCart(@AuthenticationPrincipal Long userId, @Valid @RequestBody CartPostRequestDto dto){
+        ResponseDto<CartPostResponseDto> response = cartService.postCart(userId, dto);
         HttpStatus status = response.isResult() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(response);
     }
 
     // 카트 조회
     @GetMapping(CART_GET)
-    public ResponseEntity<ResponseDto<CartGetResponseDto>> get(@AuthenticationPrincipal String userId){
+    public ResponseEntity<ResponseDto<CartGetResponseDto>> get(@AuthenticationPrincipal Long userId){
         ResponseDto<CartGetResponseDto> response = cartService.get(userId);
         HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(response);
@@ -54,7 +54,7 @@ public class CartController {
 
     // 카트 아이디로 삭제
     @DeleteMapping(CART_DELETE_CARTID)
-    public ResponseEntity<ResponseDto<Boolean>> deleteByCartId(@PathVariable int cartId){
+    public ResponseEntity<ResponseDto<Boolean>> deleteByCartId(@PathVariable Long cartId){
         ResponseDto<Boolean> response = cartService.deleteByCartId(cartId);
         HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(response);
@@ -62,8 +62,8 @@ public class CartController {
 
 
     @DeleteMapping(CART_DELETE_CARTUSERID)
-    public ResponseDto<CartDeleteAllResponseDto> deleteAll(@PathVariable("cartUserId") String cartUserId){
-        ResponseDto<CartDeleteAllResponseDto> result = cartService.deleteAll(cartUserId);
+    public ResponseDto<CartDeleteAllResponseDto> deleteAll(@PathVariable("cartUserId") Long userId){
+        ResponseDto<CartDeleteAllResponseDto> result = cartService.deleteAll(userId);
         return result;
     }
 }

@@ -8,4 +8,6 @@ public enum Main_category {
     셔츠,
     팬츠,
     패션잡화
+
 }
+

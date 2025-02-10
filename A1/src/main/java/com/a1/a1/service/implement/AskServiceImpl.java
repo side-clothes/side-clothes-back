@@ -6,7 +6,9 @@ import com.a1.a1.dto.request.ask.AskPostRequestDto;
 import com.a1.a1.dto.response.ResponseDto;
 import com.a1.a1.dto.response.ask.*;
 import com.a1.a1.entity.AskEntity;
+import com.a1.a1.entity.UserEntity;
 import com.a1.a1.repository.AskRepository;
+import com.a1.a1.repository.UserRepository;
 import com.a1.a1.service.AskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,26 +28,27 @@ import java.util.stream.Collectors;
 public class AskServiceImpl implements AskService {
 
     private final AskRepository askRepository;
+    private final UserRepository userRepository;
 
-
-    public ResponseDto<AskPostResponseDto> postAsk(AskPostRequestDto dto, String userId
+    public ResponseDto<AskPostResponseDto> postAsk(AskPostRequestDto dto, Long userId
     ){
         AskPostResponseDto data = null;
-        String askWriter = dto.getAskWriter();
+        userRepository.findById(String.valueOf(userId)).orElseThrow(() -> new Error(ResponseMessage.NOT_EXIST_USER));
         int askSort = dto.getAskSort();
         String askTitle = dto.getAskTitle();
         String askContent = dto.getAskContent();
         LocalDateTime now = LocalDateTime.now();
+
         try {
             AskEntity askEntity = AskEntity.builder()
                     .askTitle(askTitle)
                     .askContent(askContent)
                     .askSort(askSort)
-                    .askWriter(askWriter)
                     .askDatetime(now)
+                    .userId(userId)
                     .build();
             askRepository.save(askEntity);
-            data = new AskPostResponseDto(askEntity);
+            data = new AskPostResponseDto(askEntity,userId);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
@@ -54,28 +57,30 @@ public class AskServiceImpl implements AskService {
 
     }
 
+
     // 뮨의 전채 조회
     @Override
-    public ResponseDto<List<AskGetListResponseDto>> getAskAllByAskWriter(String userId) {
-        List<AskGetListResponseDto> data = null;
-        try {
-            Optional<List<AskEntity>> optionalAskEntities = askRepository.getAskAllByAskWriter(userId);
-            if(optionalAskEntities.isEmpty()){
-                return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
-            }
-            List<AskEntity> askEntities = optionalAskEntities.get();
-            data = askEntities.stream().map(AskGetListResponseDto::new)
-                    .collect(Collectors.toList());
-        } catch (Exception e){
-            e.printStackTrace();
-            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
-        }
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS,data);
+    public ResponseDto<List<AskGetListResponseDto>> getAskAllByAskId(Long userId) {
+//        List<AskGetListResponseDto> data = null;
+//        try {
+//            Optional<List<AskEntity>> optionalAskEntities = askRepository.getAskAllByAskId(userId);
+//            if(optionalAskEntities.isEmpty()){
+//                return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
+//            }
+//            List<AskEntity> askEntities = optionalAskEntities.get();
+//            data = askEntities.stream().map(AskGetListResponseDto::new)
+//                    .collect(Collectors.toList());
+//        } catch (Exception e){
+//            e.printStackTrace();
+//            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
+//        }
+//        return ResponseDto.setSuccess(ResponseMessage.SUCCESS,data);
+        return null;
     }
 
 
 
-    public ResponseDto<AskGetFindResponseDto> findByAskWriterAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(String userId, int askStatus, int months, int askSort) {
+    public ResponseDto<AskGetFindResponseDto> findByUserIdAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(Long userId, int askStatus, int months, int askSort) {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = Date.from(Instant.now().minus(months * 30, ChronoUnit.DAYS));
@@ -85,12 +90,12 @@ public class AskServiceImpl implements AskService {
 
         try {
 
-            Optional<AskEntity> optionalAskEntity = askRepository.findByAskWriterAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(userId, LocalDateTime.parse(String.valueOf(askStatus)),months,askSort);
+            Optional<AskEntity> optionalAskEntity = askRepository.findByUserIdAndAskDatetimeGreaterThanEqualAndAskSortAndAskStatusOrderByAskDatetimeDesc(userId, LocalDateTime.parse(String.valueOf(askStatus)),months,askSort);
             if (optionalAskEntity.isEmpty()) {
                 return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
             }
             AskEntity askEntity = optionalAskEntity.get();
-            data = new AskGetFindResponseDto(askEntity);
+            data = new AskGetFindResponseDto(askEntity,userId);
         } catch(Exception exception){
             exception.printStackTrace();
             return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);

@@ -8,19 +8,16 @@ import com.a1.a1.dto.response.order.GiftGetResponseDto;
 import com.a1.a1.dto.response.order.GiftPatchResponseDto;
 import com.a1.a1.dto.response.order.OrderGetListResponseDto;
 import com.a1.a1.dto.response.order.OrderPostResponseDto;
-import com.a1.a1.entity.GiftEntity;
-import com.a1.a1.entity.OrderDetailEntity;
-import com.a1.a1.entity.OrderEntity;
-import com.a1.a1.repository.GiftRepository;
-import com.a1.a1.repository.OrderDetailRepository;
-import com.a1.a1.repository.OrderRepository;
-import com.a1.a1.repository.ProductRepository;
+import com.a1.a1.entity.*;
+import com.a1.a1.repository.*;
 import com.a1.a1.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,123 +26,91 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final ProductRepository productRepository;
-    private final GiftRepository giftRepository;
+    private final UserRepository userRepository;
 
-    public ResponseDto<OrderPostResponseDto> postOrder(OrderPostRequestDto dto) {
+    public ResponseDto<OrderPostResponseDto> postOrder(OrderPostRequestDto dto, Long userId) {
 
         OrderPostResponseDto data = null;
-
-        boolean orderUserWhether = false;
-        String orderGuestPassword = dto.getOrderGuestPassword();
-        String orderGuestPasswordCheck = dto.getOrderGuestPasswordCheck();
-        String orderUserId = dto.getOrderUserId();
-        int orderGiftCode = dto.getOrderGiftCode();
-        int productId = dto.getProductId();
-        int orderCount = dto.getOrderCount();
-        String orderUserName = dto.getOrderUserName();
-        String orderUserPhone = dto.getOrderUserPhone();
-        String orderUserEmail = dto.getOrderUserEmail();
-        String orderRecieptName = dto.getOrderRecieptName();
-        String orderRecieptPhone = dto.getOrderRecieptPhone();
+        userRepository.findById(userId.toString()).orElseThrow(()-> new Error(ResponseMessage.NOT_EXIST_USER));
+        Long orderId = dto.getOrderId();
+        Long couponId = dto.getCouponId();
+        Long productId = dto.getProductId();
+        String orderReceiptName = dto.getOrderReceiptName();
+        String orderReceiptPhone = dto.getOrderReceiptPhone();
         String orderShipAddress = dto.getOrderShipAddress();
         String orderShipAddressDetail = dto.getOrderShipAddressDetail();
+        Long deliveryAddressId = dto.getDeliveryAddressId();
+        int orderTotalPrice = dto.getOrderTotalPrice();
         String orderShipMessage = dto.getOrderShipMessage();
+        LocalDateTime now = LocalDateTime.now();
+        int productPrice = dto.getProductPrice();
+        int orderDetailSeq = dto.getOrderDetailSeq();
+        String productName = dto.getProductName();
+        String productImgUrl = dto.getProductImgUrl();
+        int productCount = dto.getProductCount();
         try {
             OrderEntity orderEntity = OrderEntity.builder()
-                    .orderUserName(orderUserName)
-                    .orderUserPhone(orderUserPhone)
-                    .orderUserEmail(orderUserEmail)
-                    .orderRecieptName(orderRecieptName)
-                    .orderRecieptPhone(orderRecieptPhone)
+                    .orderId(orderId)
+                    .couponId(couponId)
+                    .orderReceiptName(orderReceiptName)
+                    .orderReceiptPhone(orderReceiptPhone)
                     .orderShipAddress(orderShipAddress)
                     .orderShipAddressDetail(orderShipAddressDetail)
+                    .deliveryAddressId(deliveryAddressId)
+                    .orderTotalPrice(orderTotalPrice)
                     .orderShipMessage(orderShipMessage)
-                    .orderGiftCode(orderGiftCode)
-                    .orderUserWhether(orderUserWhether)
-                    .orderGuestPassword(orderGuestPassword)
-                    .orderGuestPassword(orderGuestPasswordCheck)
-                    .orderUserId(orderUserId)
                     .build();
             orderRepository.save(orderEntity);
-            data = new OrderPostResponseDto(orderEntity);
+            OrderDetailEntity orderDetailEntity = OrderDetailEntity.builder()
+                    .orderId(orderId)
+                    .productId(productId)
+                    .productName(productName)
+                    .productPrice(productPrice)
+                    .productCount(productCount)
+                    .orderDetailSeq(orderDetailSeq)
+                    .productImageUrl(productImgUrl)
+                    .build();
+            orderDetailRepository.save(orderDetailEntity);
+            data = new OrderPostResponseDto(orderEntity,orderDetailEntity,productId,userId,couponId,deliveryAddressId,productPrice,productName);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
         }
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS,data);
+
+    }
+
+    @Override
+    public ResponseDto<List<OrderGetListResponseDto>> getOrderList(Long userId) {
+        return null;
     }
 
 
 
 
-    public ResponseDto<List<OrderGetListResponseDto>> getOrderList(String userId) {
-
-        List<OrderGetListResponseDto> data = new ArrayList<OrderGetListResponseDto>();
-
-        try {
-
-            List<OrderEntity> orderList = orderRepository.findByOrderUserId(userId);
-
-            for ( OrderEntity order : orderList ) {
-
-                List<OrderDetailEntity> detailList = orderDetailRepository.findByOrderNumber(order.getOrderNumber());
-                OrderGetListResponseDto resultItem = new OrderGetListResponseDto(order, detailList);
-
-                data.add(resultItem);
-
-            }
-
-        } catch(Exception exception){
-            exception.printStackTrace();
-            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
-        }
-
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
-    }
-
-    public ResponseDto<GiftGetResponseDto> getGiftCode(int giftCode){
-
-        GiftGetResponseDto data = null;
-
-        try {
-
-            List<GiftEntity> giftList = giftRepository.findAll();
-
-            data = new GiftGetResponseDto(giftList);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
-        }
-
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
-    }
-
-    public ResponseDto<GiftPatchResponseDto> patchGift(GiftPatchRequestDto dto){
-
-        GiftPatchResponseDto data = null;
-
-        int orderGiftCode = dto.getOrderGiftCode();
-        String orderNumber = dto.getOrderNumber();
-
-        try {
-
-            OrderEntity orderEntity = orderRepository.findByOrderNumber(orderNumber);
-            if (orderEntity == null) return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_ORDER);
-
-            orderEntity.setOrderGiftCode(orderGiftCode);
-            orderRepository.save(orderEntity);
-
-            data = new GiftPatchResponseDto(dto);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
-        }
-
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
-    }
+//    public ResponseDto<GiftPatchResponseDto> patchGift(GiftPatchRequestDto dto){
+//
+//        GiftPatchResponseDto data = null;
+//
+//        int orderGiftCode = dto.getOrderGiftCode();
+//        String orderNumber = dto.getOrderNumber();
+//
+//        try {
+//
+//            OrderEntity orderEntity = orderRepository.findByOrderId(Integer.parseInt(orderId));
+//            if (orderEntity == null) return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_ORDER);
+//
+//            orderEntity.setOrderGiftCode(orderGiftCode);
+//            orderRepository.save(orderEntity);
+//
+//            data = new GiftPatchResponseDto(dto);
+//
+//        } catch (Exception exception) {
+//            exception.printStackTrace();
+//            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
+//        }
+//
+//        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+//
+//    }
 }

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -21,60 +22,64 @@ public class OrderEntity {
     //  주문번호 uuid
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_number")
-    private String orderNumber;
-    //  회원여부
-    private boolean orderUserWhether;
-    //  비회원 비밀번호
-    private String orderGuestPassword;
-    //  회원 아이디xx
-    private String orderUserId;
-    //  사은품
-    private int orderGiftCode;
-    //  주문자 이름
-    private String orderUserName;
-    //  주문자 전화번호
+    @Column(name = "order_id")
+    private Long orderId;
+
+    //  회원 아이디
+    @Column(name = "user_id")
+    private Long userId;
+
+    // 주문자 전화번호
+    @Column(name = "order_user_phone")
     private String orderUserPhone;
-    //  주문자 이메일
-    private String orderUserEmail;
-    //  주문 날짜
-    private String orderDatetime;
-    //  수령인 이름
-    private String orderRecieptName;
-    //  수령인 전화 번호
-    private String orderRecieptPhone;
-    //  수령인 주소
+
+    //  할인 코드
+    @Column(name = "coupon_id")
+    private Long couponId;
+
+    // 주문 날짜
+    @Column(name = "order_datetime")
+    private Date orderDateTime;
+
+    // 배송지 관리
+    @Column(name = "delivery_address_id")
+    private Long deliveryAddressId;
+
+    // 수령인 이름
+    @Column(name = "order_receipt_name")
+    private String orderReceiptName;
+
+    // 수령인 전화번호
+    @Column(name = "order_receipt_phone")
+    private String orderReceiptPhone;
+
+    // 수령인 주소
+    @Column(name = "order_ship_address")
     private String orderShipAddress;
-    //  수령인 상세 주소
+
+    // 수령인 상세 주소
+    @Column(name = "order_ship_address_detail")
     private String orderShipAddressDetail;
-    //  최종 결제 금액
+
+    // 최종 결제 금액
+    @Column(name = "order_total_price")
     private int orderTotalPrice;
-    //  주문 상태
-    private int orderStatus;
-    //  배송 회사
+
+    // 주문 상태
+//    @Enumerated(EnumType.STRING)
+//    @Column(name = "order_status")
+//    private OrderStatus orderStatus;
+
+    // 배송 회사
+    @Column(name = "order_ship_company")
     private String orderShipCompany;
-    //  송장번호
-    private int orderShipNumber;
-    //  배송 메세지
+
+    // 송장 번호
+    @Column(name = "order_ship_number")
+    private String orderShipNumber;
+
+    // 베송 메세지
+    @Column(name = "order_ship_message")
     private String orderShipMessage;
 
-    public OrderEntity(OrderPostRequestDto dto, ProductEntity product) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-        this.orderNumber = UUID.randomUUID().toString();
-        this.orderUserWhether = dto.getOrderUserWhether();
-        this.orderGuestPassword = dto.getOrderGuestPassword();
-        this.orderUserId = dto.getOrderUserId();
-        this.orderGiftCode = dto.getOrderGiftCode();
-        this.orderUserName = dto.getOrderUserName();
-        this.orderUserPhone = dto.getOrderUserPhone();
-        this.orderUserEmail = dto.getOrderUserEmail();
-        this.orderDatetime = dateFormat.format(new Date());
-        this.orderRecieptName = dto.getOrderRecieptName();
-        this.orderRecieptPhone =dto.getOrderRecieptPhone();
-        this.orderShipAddress = dto.getOrderShipAddress();
-        this.orderShipAddressDetail = dto.getOrderShipAddressDetail();
-        this.orderTotalPrice = product.getProductPrice() * dto.getOrderCount();
-        this.orderShipMessage = dto.getOrderShipMessage();
-    }
 }

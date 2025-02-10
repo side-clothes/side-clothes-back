@@ -31,7 +31,7 @@ public class AuthController {
     private static final String POST_FIND_ID = "/findId";
 
     private static final String POST_RESET_PASSWORD = "/resetPassword";
-    private static final String POST_SEND_PASSWORD_EMAIL = "/sendPassword/{userEmail}";
+    private static final String POST_SEND_PASSWORD_EMAIL = "/sendPassword";
 
     @PostMapping(POST_SIGN_UP)
     public ResponseEntity<ResponseDto<SignUpPostResponseDto>> signUp(@Valid @RequestBody SignUpRequestDto requestBody) {
@@ -61,9 +61,10 @@ public class AuthController {
     }
 
     @PostMapping(POST_SEND_PASSWORD_EMAIL)
-    public ResponseDto<Boolean> sendPasswordEmail(@RequestBody SendPasswordEmailRequestDto requestBody) {
+    public ResponseEntity<ResponseDto<Boolean>> sendPasswordEmail(@RequestBody SendPasswordEmailRequestDto requestBody) {
         ResponseDto<Boolean> response = authService.sendPasswordEmail(requestBody);
-        return response;
+        HttpStatus status = response.isResult() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
     }
 
 }

@@ -41,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            Long id = jwtProvider.getIdFromJwt(token);
+            String id = jwtProvider.getIdFromJwt(token);
             setAuthenticationContext(request, id);
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -50,7 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private void setAuthenticationContext(HttpServletRequest request, Long id) {
+    private void setAuthenticationContext(HttpServletRequest request, String id) {
         AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, AuthorityUtils.NO_AUTHORITIES);
 
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

@@ -5,4 +5,6 @@ public enum Recommend_category {
     세일,
     브랜드,
     신상품
+
 }
+

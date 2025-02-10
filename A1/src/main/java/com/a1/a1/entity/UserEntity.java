@@ -2,9 +2,7 @@ package com.a1.a1.entity;
 
 import com.a1.a1.dto.request.auth.SignUpRequestDto;
 import com.a1.a1.dto.request.user.UserPatchRequestDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +20,9 @@ import java.util.Date;
 public class UserEntity {
     //	아이디
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String userId;
     //	비밀번호
     private String userPassword;
@@ -38,13 +39,12 @@ public class UserEntity {
     //	생일
     private String userBirth;
     //	가입 날짜
-    private String userSignUpDate;
+    private String signUpDate;
     //	탈퇴 날짜
-    private String userWithdraw;
+    private String withdrawDate;
 
     public UserEntity(SignUpRequestDto dto) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
         this.userId = dto.getUserId();
         this.userPassword = dto.getUserPassword();
         this.userEmail = dto.getUserEmail();
@@ -53,11 +53,10 @@ public class UserEntity {
         this.userName = dto.getUserName();
         this.userPhone = dto.getUserPhone();
         this.userBirth = dto.getUserBirth();
-        this.userSignUpDate = dateFormat.format(new Date());
+        this.signUpDate = dateFormat.format(new Date());
     }
 
     public void setPatchUser(UserPatchRequestDto dto) {
-
         this.userAddress = dto.getUserAddress();
         this.userAddressDetail =dto.getUserAddressDetail();
         this.userName = dto.getUserName();

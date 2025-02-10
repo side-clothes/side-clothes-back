@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 public class AskPostRequestDto {
 
     @NotNull
-    private String askWriter;
-    @NotNull
     private int askSort;
     @NotBlank
     private String askTitle;

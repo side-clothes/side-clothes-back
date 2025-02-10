@@ -15,4 +15,3 @@ public class BestSellerGetResponseDto {
     List<ProductEntity> bestSellerList;
 
 }
-
