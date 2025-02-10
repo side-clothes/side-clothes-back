@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="product_images")
+@Entity
 public class ProductImageEntity {
 
     @Id
@@ -23,7 +24,4 @@ public class ProductImageEntity {
 
     @Column(name = "product_image")
     private String productImage;
-
-
-
 }

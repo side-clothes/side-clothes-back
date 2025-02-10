@@ -49,7 +49,7 @@ public class ProductEntity {
     private int productSalesCount;
     // 제품 이미지
     @Builder.Default
-    @OneToMany
+    @OneToMany(mappedBy = "productEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImageEntity> productImages = new ArrayList<>();
 
 }
